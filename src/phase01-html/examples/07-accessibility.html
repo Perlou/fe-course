@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML 无障碍访问示例</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        line-height: 1.8;
+      }
+      h1 {
+        color: #333;
+        text-align: center;
+      }
+      h2 {
+        color: #667eea;
+        margin-top: 30px;
+        border-bottom: 2px solid #667eea;
+        padding-bottom: 8px;
+      }
+      .demo {
+        background: #f5f5f5;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 15px 0;
+      }
+      pre {
+        background: #2d2d2d;
+        color: #f8f8f2;
+        padding: 15px;
+        border-radius: 8px;
+        overflow-x: auto;
+        font-size: 13px;
+      }
+      .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: #667eea;
+        color: white;
+        padding: 10px 20px;
+        z-index: 100;
+        text-decoration: none;
+        border-radius: 0 0 8px 0;
+      }
+      .skip-link:focus {
+        top: 0;
+      }
+      button,
+      .btn {
+        padding: 10px 20px;
+        background: #667eea;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        margin: 5px;
+      }
+      button:focus,
+      .btn:focus {
+        outline: 3px solid #ffc107;
+        outline-offset: 2px;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+      }
+      .alert {
+        padding: 15px;
+        border-radius: 8px;
+        margin: 10px 0;
+      }
+      .alert-success {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+      .alert-error {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+      input,
+      select {
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+      }
+      input:focus,
+      select:focus {
+        border-color: #667eea;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      .note {
+        background: #e3f2fd;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid #667eea;
+        margin: 15px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 跳转链接 - 键盘用户按 Tab 可见 -->
+    <a href="#main-content" class="skip-link">跳转到主要内容</a>
+
+    <h1>♿ HTML 无障碍访问 (Accessibility)</h1>
+
+    <div class="note">
+      <strong>💡 什么是无障碍访问？</strong><br />
+      确保所有用户（包括使用屏幕阅读器、键盘导航等辅助技术的用户）都能访问和使用网页内容。
+    </div>
+
+    <h2>1. 跳转链接 (Skip Link)</h2>
+    <div class="demo">
+      <p>按 <kbd>Tab</kbd> 键，会看到左上角出现"跳转到主要内容"链接。</p>
+      <p>这帮助键盘用户快速跳过导航，直接访问主要内容。</p>
+    </div>
+    <pre>
+&lt;a href="#main-content" class="skip-link"&gt;跳转到主要内容&lt;/a&gt;
+...
+&lt;main id="main-content"&gt;...&lt;/main&gt;</pre
+    >
+
+    <main id="main-content">
+      <h2>2. 语义化标签</h2>
+      <div class="demo">
+        <p>使用正确的语义化标签让屏幕阅读器能理解页面结构：</p>
+        <ul>
+          <li><code>&lt;header&gt;</code> - 页面/区块头部</li>
+          <li><code>&lt;nav&gt;</code> - 导航区域</li>
+          <li><code>&lt;main&gt;</code> - 主要内容</li>
+          <li><code>&lt;article&gt;</code> - 独立文章</li>
+          <li><code>&lt;aside&gt;</code> - 侧边栏</li>
+          <li><code>&lt;footer&gt;</code> - 页面/区块底部</li>
+        </ul>
+      </div>
+
+      <h2>3. 图片替代文本</h2>
+      <div class="demo">
+        <img
+          src="https://via.placeholder.com/200x100/667eea/ffffff?text=Logo"
+          alt="公司Logo - 蓝紫色渐变背景"
+        />
+        <p>有意义的图片需要 <code>alt</code> 描述内容</p>
+
+        <img
+          src="https://via.placeholder.com/100x50/ddd/999?text=装饰"
+          alt=""
+          role="presentation"
+        />
+        <p>
+          装饰性图片使用空 <code>alt=""</code> 和
+          <code>role="presentation"</code>
+        </p>
+      </div>
+      <pre>
+&lt;!-- 有意义的图片 --&gt;
+&lt;img src="logo.png" alt="公司Logo"&gt;
+
+&lt;!-- 装饰性图片 --&gt;
+&lt;img src="decorative.png" alt="" role="presentation"&gt;</pre
+      >
+
+      <h2>4. 表单标签关联</h2>
+      <div class="demo">
+        <form>
+          <div class="form-group">
+            <label for="username"
+              >用户名
+              <span aria-hidden="true" style="color: red">*</span></label
+            >
+            <input
+              type="text"
+              id="username"
+              name="username"
+              required
+              aria-required="true"
+              aria-describedby="username-help"
+            />
+            <small id="username-help" style="color: #666">3-20个字符</small>
+          </div>
+
+          <div class="form-group">
+            <label for="email">邮箱</label>
+            <input type="email" id="email" name="email" aria-invalid="false" />
+          </div>
+
+          <button type="button" onclick="showAlert()">提交表单</button>
+        </form>
+      </div>
+      <pre>
+&lt;label for="username"&gt;用户名&lt;/label&gt;
+&lt;input type="text" id="username" aria-required="true" aria-describedby="help"&gt;
+&lt;small id="help"&gt;3-20个字符&lt;/small&gt;</pre
+      >
+
+      <h2>5. ARIA 属性</h2>
+      <div class="demo">
+        <!-- aria-label: 给元素添加标签 -->
+        <button aria-label="关闭对话框" style="font-size: 24px">×</button>
+
+        <!-- aria-expanded: 展开/折叠状态 -->
+        <button aria-expanded="false" onclick="togglePanel(this)">
+          展开面板
+        </button>
+        <div
+          id="panel"
+          hidden
+          style="
+            margin-top: 10px;
+            padding: 15px;
+            background: #e9e9e9;
+            border-radius: 6px;
+          "
+        >
+          这是面板内容
+        </div>
+
+        <!-- aria-live: 动态更新区域 -->
+        <div
+          id="status"
+          role="status"
+          aria-live="polite"
+          class="alert alert-success"
+          style="margin-top: 15px"
+        >
+          表单已准备就绪
+        </div>
+      </div>
+      <pre>
+&lt;button aria-label="关闭"&gt;×&lt;/button&gt;
+&lt;button aria-expanded="false"&gt;展开&lt;/button&gt;
+&lt;div role="status" aria-live="polite"&gt;状态消息&lt;/div&gt;</pre
+      >
+
+      <h2>6. 键盘导航</h2>
+      <div class="demo">
+        <p>使用 <code>tabindex</code> 控制焦点顺序：</p>
+        <button tabindex="3">Tab 顺序 3</button>
+        <button tabindex="1">Tab 顺序 1</button>
+        <button tabindex="2">Tab 顺序 2</button>
+        <button tabindex="0">默认 Tab 顺序</button>
+        <button tabindex="-1">不可 Tab（但可编程聚焦）</button>
+      </div>
+      <pre>
+tabindex="0"  - 按自然顺序参与 Tab
+tabindex="1"  - 优先级 1（数字越小越先）
+tabindex="-1" - 移出 Tab 顺序，可用 focus() 聚焦</pre
+      >
+
+      <h2>7. 屏幕阅读器专用内容</h2>
+      <div class="demo">
+        <button>
+          <span aria-hidden="true">🔍</span>
+          <span class="sr-only">搜索</span>
+        </button>
+        <p style="margin-top: 15px">
+          图标按钮使用 <code>.sr-only</code> 类为屏幕阅读器提供文字说明。
+        </p>
+      </div>
+      <pre>
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    clip: rect(0, 0, 0, 0);
+    overflow: hidden;
+}
+
+&lt;button&gt;
+    &lt;span aria-hidden="true"&gt;🔍&lt;/span&gt;
+    &lt;span class="sr-only"&gt;搜索&lt;/span&gt;
+&lt;/button&gt;</pre
+      >
+
+      <h2>8. 焦点可见样式</h2>
+      <div class="demo">
+        <p>使用 Tab 键在下面的按钮间切换，观察焦点样式：</p>
+        <button>按钮 1</button>
+        <button>按钮 2</button>
+        <button>按钮 3</button>
+      </div>
+      <pre>
+button:focus {
+    outline: 3px solid #ffc107;
+    outline-offset: 2px;
+}</pre
+      >
+
+      <h2>9. 颜色对比度</h2>
+      <div class="demo">
+        <p
+          style="
+            background: #333;
+            color: #fff;
+            padding: 10px;
+            border-radius: 4px;
+          "
+        >
+          ✅ 高对比度：深色背景 + 白色文字
+        </p>
+        <p
+          style="
+            background: #f0f0f0;
+            color: #999;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+          "
+        >
+          ⚠️ 低对比度：浅灰背景 + 浅灰文字（不推荐）
+        </p>
+        <p style="margin-top: 10px">WCAG 建议普通文本对比度至少 4.5:1</p>
+      </div>
+    </main>
+
+    <script>
+      function togglePanel(btn) {
+        const panel = document.getElementById("panel");
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        btn.setAttribute("aria-expanded", !expanded);
+        btn.textContent = expanded ? "展开面板" : "收起面板";
+        panel.hidden = expanded;
+      }
+
+      function showAlert() {
+        const status = document.getElementById("status");
+        status.textContent = "表单提交成功！" + new Date().toLocaleTimeString();
+        status.className = "alert alert-success";
+      }
+    </script>
+  </body>
+</html>

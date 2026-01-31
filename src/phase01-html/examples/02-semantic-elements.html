@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML5 语义化标签示例</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.6;
+        color: #333;
+      }
+
+      /* 头部样式 */
+      header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+      }
+
+      header h1 {
+        margin-bottom: 10px;
+      }
+
+      /* 导航样式 */
+      nav {
+        background-color: #333;
+        padding: 10px 20px;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      nav a:hover {
+        color: #667eea;
+      }
+
+      /* 主体布局 */
+      .container {
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 20px;
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      /* 文章样式 */
+      article {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+      }
+
+      article header {
+        background: transparent;
+        color: #333;
+        padding: 0;
+        margin-bottom: 20px;
+      }
+
+      article h2 {
+        color: #667eea;
+        margin-bottom: 10px;
+      }
+
+      section {
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+      }
+
+      section:last-child {
+        border-bottom: none;
+      }
+
+      section h3 {
+        color: #555;
+        margin-bottom: 10px;
+      }
+
+      /* 侧边栏样式 */
+      aside {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        height: fit-content;
+      }
+
+      aside h3 {
+        color: #667eea;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #667eea;
+      }
+
+      aside ul {
+        list-style: none;
+      }
+
+      aside li {
+        padding: 8px 0;
+        border-bottom: 1px solid #eee;
+      }
+
+      aside a {
+        color: #333;
+        text-decoration: none;
+      }
+
+      aside a:hover {
+        color: #667eea;
+      }
+
+      /* 图片容器样式 */
+      figure {
+        margin: 20px 0;
+        text-align: center;
+      }
+
+      figure img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      figcaption {
+        margin-top: 10px;
+        color: #666;
+        font-style: italic;
+      }
+
+      /* 时间标签样式 */
+      time {
+        color: #888;
+        font-size: 0.9em;
+      }
+
+      /* 高亮标记样式 */
+      mark {
+        background: linear-gradient(120deg, #fff3cd 0%, #fff3cd 100%);
+        padding: 2px 6px;
+        border-radius: 3px;
+      }
+
+      /* 页脚样式 */
+      footer {
+        background-color: #333;
+        color: white;
+        padding: 30px 20px;
+        text-align: center;
+      }
+
+      footer address {
+        font-style: normal;
+        margin-top: 10px;
+      }
+
+      footer a {
+        color: #667eea;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 页面头部 -->
+    <header>
+      <h1>我的技术博客</h1>
+      <p>分享前端开发知识与经验</p>
+    </header>
+
+    <!-- 导航 -->
+    <nav aria-label="主导航">
+      <ul>
+        <li><a href="#home">首页</a></li>
+        <li><a href="#articles">文章</a></li>
+        <li><a href="#about">关于</a></li>
+        <li><a href="#contact">联系</a></li>
+      </ul>
+    </nav>
+
+    <!-- 主要内容区 -->
+    <main class="container">
+      <!-- 文章 -->
+      <article>
+        <header>
+          <h2>理解 HTML5 语义化标签</h2>
+          <time datetime="2024-01-15">发布于 2024年1月15日</time>
+        </header>
+
+        <section id="intro">
+          <h3>什么是语义化？</h3>
+          <p>
+            语义化 HTML 是指使用<mark>恰当的标签</mark>来描述内容的结构和含义，
+            而不仅仅是使用 div 和 span。
+          </p>
+          <p>语义化的好处包括：</p>
+          <ul>
+            <li>提高代码可读性和可维护性</li>
+            <li>有利于搜索引擎优化（SEO）</li>
+            <li>提升无障碍访问体验</li>
+            <li>便于团队协作</li>
+          </ul>
+        </section>
+
+        <section id="tags">
+          <h3>常用语义化标签</h3>
+          <p>HTML5 引入了多个语义化标签：</p>
+          <figure>
+            <img
+              src="https://via.placeholder.com/600x300/667eea/ffffff?text=HTML5+Semantic+Tags"
+              alt="HTML5 语义化标签示意图"
+            />
+            <figcaption>图1：HTML5 语义化标签布局示意</figcaption>
+          </figure>
+        </section>
+
+        <section id="example">
+          <h3>对比示例</h3>
+          <p>传统写法 vs 语义化写法：</p>
+          <pre><code>
+&lt;!-- 传统写法 --&gt;
+&lt;div id="header"&gt;...&lt;/div&gt;
+&lt;div id="nav"&gt;...&lt;/div&gt;
+&lt;div id="main"&gt;...&lt;/div&gt;
+
+&lt;!-- 语义化写法 --&gt;
+&lt;header&gt;...&lt;/header&gt;
+&lt;nav&gt;...&lt;/nav&gt;
+&lt;main&gt;...&lt;/main&gt;
+                </code></pre>
+        </section>
+
+        <footer>
+          <p>作者：前端小白 | 分类：HTML 基础</p>
+        </footer>
+      </article>
+
+      <!-- 侧边栏 -->
+      <aside>
+        <h3>推荐阅读</h3>
+        <ul>
+          <li><a href="#">CSS Flexbox 完全指南</a></li>
+          <li><a href="#">JavaScript 异步编程</a></li>
+          <li><a href="#">React Hooks 入门</a></li>
+          <li><a href="#">Vue 3 组合式 API</a></li>
+          <li><a href="#">TypeScript 快速上手</a></li>
+        </ul>
+
+        <h3 style="margin-top: 30px">标签云</h3>
+        <p>
+          <a href="#">HTML</a> · <a href="#">CSS</a> ·
+          <a href="#">JavaScript</a> · <a href="#">React</a> ·
+          <a href="#">Vue</a>
+        </p>
+      </aside>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+      <p>&copy; 2024 前端课程. 保留所有权利.</p>
+      <address>
+        联系我们：<a href="mailto:info@fe-course.com">info@fe-course.com</a>
+      </address>
+    </footer>
+  </body>
+</html>

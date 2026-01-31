@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML5 多媒体标签示例</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.6;
+        background-color: #1a1a2e;
+        color: #eee;
+        padding: 40px 20px;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 40px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      section {
+        background: #16213e;
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      h2 {
+        color: #667eea;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #667eea;
+      }
+
+      h3 {
+        color: #ccc;
+        margin: 20px 0 10px;
+      }
+
+      /* 视频容器 */
+      .video-container {
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%; /* 16:9 比例 */
+        background: #000;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .video-container video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      /* 音频样式 */
+      audio {
+        width: 100%;
+        margin: 10px 0;
+      }
+
+      /* 图片样式 */
+      .image-demo {
+        text-align: center;
+      }
+
+      .image-demo img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Canvas 样式 */
+      canvas {
+        display: block;
+        margin: 20px auto;
+        border: 2px solid #667eea;
+        border-radius: 8px;
+      }
+
+      /* SVG 样式 */
+      .svg-demo {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+      }
+
+      .svg-demo svg {
+        background: #1a1a2e;
+        border-radius: 8px;
+      }
+
+      /* iframe 样式 */
+      .iframe-container {
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .iframe-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      /* 代码块 */
+      pre {
+        background: #0f0f1a;
+        padding: 15px;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 15px 0;
+      }
+
+      code {
+        font-family: "Monaco", "Menlo", "Courier New", monospace;
+        color: #a5d6ff;
+      }
+
+      /* 提示 */
+      .note {
+        background: rgba(102, 126, 234, 0.2);
+        border-left: 4px solid #667eea;
+        padding: 15px;
+        margin: 15px 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .note strong {
+        color: #667eea;
+      }
+
+      /* figure 样式 */
+      figure {
+        margin: 20px 0;
+      }
+
+      figcaption {
+        text-align: center;
+        color: #888;
+        margin-top: 10px;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🎬 HTML5 多媒体标签</h1>
+
+      <!-- 视频 -->
+      <section>
+        <h2>📹 视频 &lt;video&gt;</h2>
+
+        <p>HTML5 的 video 标签让网页可以原生播放视频，无需 Flash 插件。</p>
+
+        <h3>基本用法</h3>
+        <pre><code>&lt;video controls width="640" poster="preview.jpg"&gt;
+    &lt;source src="video.mp4" type="video/mp4"&gt;
+    &lt;source src="video.webm" type="video/webm"&gt;
+    您的浏览器不支持视频播放
+&lt;/video&gt;</code></pre>
+
+        <h3>演示</h3>
+        <div class="video-container">
+          <video
+            controls
+            preload="metadata"
+            poster="https://via.placeholder.com/640x360/667eea/ffffff?text=Video+Poster"
+          >
+            <!-- 这里使用一个示例视频 URL -->
+            <source
+              src="https://www.w3schools.com/html/mov_bbb.mp4"
+              type="video/mp4"
+            />
+            <source
+              src="https://www.w3schools.com/html/mov_bbb.ogg"
+              type="video/ogg"
+            />
+            您的浏览器不支持视频播放
+          </video>
+        </div>
+
+        <h3>常用属性</h3>
+        <pre><code>controls   - 显示播放控件
+autoplay   - 自动播放（注意：大多数浏览器需要 muted 配合）
+muted      - 静音
+loop       - 循环播放
+poster     - 封面图片
+preload    - 预加载策略（none/metadata/auto）
+width/height - 尺寸</code></pre>
+
+        <div class="note">
+          <strong>💡 提示：</strong>为了兼容性，建议同时提供 MP4 和 WebM 格式。
+        </div>
+      </section>
+
+      <!-- 音频 -->
+      <section>
+        <h2>🎵 音频 &lt;audio&gt;</h2>
+
+        <h3>基本用法</h3>
+        <pre><code>&lt;audio controls&gt;
+    &lt;source src="audio.mp3" type="audio/mpeg"&gt;
+    &lt;source src="audio.ogg" type="audio/ogg"&gt;
+    您的浏览器不支持音频播放
+&lt;/audio&gt;</code></pre>
+
+        <h3>演示</h3>
+        <audio controls>
+          <source
+            src="https://www.w3schools.com/html/horse.mp3"
+            type="audio/mpeg"
+          />
+          <source
+            src="https://www.w3schools.com/html/horse.ogg"
+            type="audio/ogg"
+          />
+          您的浏览器不支持音频播放
+        </audio>
+
+        <div class="note">
+          <strong>💡 提示：</strong>音频格式推荐使用 MP3（最广泛支持）或
+          OGG（开源格式）。
+        </div>
+      </section>
+
+      <!-- 响应式图片 -->
+      <section>
+        <h2>🖼️ 响应式图片 &lt;picture&gt;</h2>
+
+        <p>picture 标签可以根据屏幕尺寸或条件加载不同的图片。</p>
+
+        <h3>基本用法</h3>
+        <pre><code>&lt;picture&gt;
+    &lt;source media="(min-width: 1200px)" srcset="large.jpg"&gt;
+    &lt;source media="(min-width: 768px)" srcset="medium.jpg"&gt;
+    &lt;img src="small.jpg" alt="响应式图片" loading="lazy"&gt;
+&lt;/picture&gt;</code></pre>
+
+        <h3>演示</h3>
+        <figure class="image-demo">
+          <picture>
+            <source
+              media="(min-width: 800px)"
+              srcset="
+                https://via.placeholder.com/800x400/667eea/ffffff?text=Large+Screen
+              "
+            />
+            <source
+              media="(min-width: 400px)"
+              srcset="
+                https://via.placeholder.com/500x300/764ba2/ffffff?text=Medium+Screen
+              "
+            />
+            <img
+              src="https://via.placeholder.com/300x200/ec4899/ffffff?text=Small+Screen"
+              alt="响应式图片演示"
+              loading="lazy"
+            />
+          </picture>
+          <figcaption>调整浏览器宽度查看图片变化</figcaption>
+        </figure>
+
+        <div class="note">
+          <strong>💡 提示：</strong>使用
+          <code>loading="lazy"</code> 可以延迟加载屏幕外的图片，提升性能。
+        </div>
+      </section>
+
+      <!-- Canvas -->
+      <section>
+        <h2>🎨 画布 &lt;canvas&gt;</h2>
+
+        <p>Canvas 是 HTML5 中用于绑定脚本绘制图形的元素。</p>
+
+        <h3>演示</h3>
+        <canvas id="myCanvas" width="400" height="200"></canvas>
+
+        <h3>代码</h3>
+        <pre><code>const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');
+
+// 绘制渐变背景
+const gradient = ctx.createLinearGradient(0, 0, 400, 0);
+gradient.addColorStop(0, '#667eea');
+gradient.addColorStop(1, '#764ba2');
+ctx.fillStyle = gradient;
+ctx.fillRect(0, 0, 400, 200);
+
+// 绘制文字
+ctx.font = '30px Arial';
+ctx.fillStyle = 'white';
+ctx.textAlign = 'center';
+ctx.fillText('Hello Canvas!', 200, 110);</code></pre>
+      </section>
+
+      <!-- SVG -->
+      <section>
+        <h2>📐 矢量图 &lt;svg&gt;</h2>
+
+        <p>SVG 是基于 XML 的矢量图形格式，可以无损缩放。</p>
+
+        <h3>演示</h3>
+        <div class="svg-demo">
+          <!-- 圆形 -->
+          <svg width="120" height="120">
+            <circle
+              cx="60"
+              cy="60"
+              r="50"
+              fill="#667eea"
+              stroke="#764ba2"
+              stroke-width="4"
+            />
+          </svg>
+
+          <!-- 矩形 -->
+          <svg width="120" height="120">
+            <rect
+              x="10"
+              y="10"
+              width="100"
+              height="100"
+              rx="15"
+              ry="15"
+              fill="#764ba2"
+            />
+          </svg>
+
+          <!-- 三角形 -->
+          <svg width="120" height="120">
+            <polygon points="60,10 110,110 10,110" fill="#ec4899" />
+          </svg>
+
+          <!-- 渐变圆形 -->
+          <svg width="120" height="120">
+            <defs>
+              <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color: #667eea" />
+                <stop offset="100%" style="stop-color: #ec4899" />
+              </linearGradient>
+            </defs>
+            <circle cx="60" cy="60" r="50" fill="url(#grad1)" />
+          </svg>
+        </div>
+
+        <h3>代码</h3>
+        <pre><code>&lt;svg width="120" height="120"&gt;
+    &lt;circle cx="60" cy="60" r="50" 
+            fill="#667eea" 
+            stroke="#764ba2" 
+            stroke-width="4"/&gt;
+&lt;/svg&gt;</code></pre>
+      </section>
+
+      <!-- iframe -->
+      <section>
+        <h2>🔲 嵌入内容 &lt;iframe&gt;</h2>
+
+        <p>iframe 可以在页面中嵌入其他网页或服务。</p>
+
+        <h3>嵌入地图示例</h3>
+        <div class="iframe-container">
+          <iframe
+            src="https://www.openstreetmap.org/export/embed.html?bbox=116.3%2C39.9%2C116.5%2C40.0&amp;layer=mapnik"
+            loading="lazy"
+            title="地图嵌入示例"
+          >
+          </iframe>
+        </div>
+
+        <h3>安全属性</h3>
+        <pre><code>&lt;iframe 
+    src="https://example.com"
+    sandbox="allow-scripts allow-same-origin"
+    loading="lazy"
+    referrerpolicy="no-referrer"
+&gt;&lt;/iframe&gt;</code></pre>
+
+        <div class="note">
+          <strong>⚠️ 注意：</strong>使用 <code>sandbox</code> 属性可以限制
+          iframe 的权限，提高安全性。
+        </div>
+      </section>
+    </div>
+
+    <script>
+      // Canvas 绘制
+      const canvas = document.getElementById("myCanvas");
+      const ctx = canvas.getContext("2d");
+
+      // 绘制渐变背景
+      const gradient = ctx.createLinearGradient(0, 0, 400, 0);
+      gradient.addColorStop(0, "#667eea");
+      gradient.addColorStop(1, "#764ba2");
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, 400, 200);
+
+      // 绘制文字
+      ctx.font = "bold 30px Arial";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText("Hello Canvas!", 200, 100);
+
+      // 绘制一些装饰性形状
+      ctx.beginPath();
+      ctx.arc(50, 50, 20, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(255,255,255,0.3)";
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(350, 150, 30, 0, Math.PI * 2);
+      ctx.fill();
+    </script>
+  </body>
+</html>

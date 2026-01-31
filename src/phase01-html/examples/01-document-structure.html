@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML 文档结构示例</title>
+    <meta name="description" content="学习 HTML 基本文档结构" />
+    <meta name="author" content="前端课程" />
+
+    <!-- 外部 CSS 链接示例 -->
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- 内部样式 -->
+    <style>
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+
+      .highlight {
+        background-color: #fff3cd;
+        padding: 2px 6px;
+        border-radius: 4px;
+      }
+
+      code {
+        background-color: #f4f4f4;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: "Monaco", "Menlo", monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>HTML 文档结构</h1>
+
+    <h2>1. DOCTYPE 声明</h2>
+    <p>
+      <code>&lt;!DOCTYPE html&gt;</code> 告诉浏览器这是一个 HTML5 文档。
+      这是文档的第一行，必须存在。
+    </p>
+
+    <h2>2. &lt;html&gt; 根元素</h2>
+    <p>
+      <code>&lt;html lang="zh-CN"&gt;</code> 是整个页面的根元素。
+      <span class="highlight">lang 属性</span>用于指定页面语言，有助于 SEO
+      和无障碍访问。
+    </p>
+
+    <h2>3. &lt;head&gt; 头部</h2>
+    <p>头部包含不可见的元信息：</p>
+    <ul>
+      <li><code>charset</code> - 字符编码（必须设置为 UTF-8）</li>
+      <li><code>viewport</code> - 视口设置（响应式布局必需）</li>
+      <li><code>title</code> - 页面标题（显示在标签页和搜索结果）</li>
+      <li><code>description</code> - 页面描述（SEO 重要）</li>
+      <li><code>link</code> - 外部资源链接（CSS、图标等）</li>
+      <li><code>style</code> - 内部样式</li>
+      <li><code>script</code> - JavaScript 脚本</li>
+    </ul>
+
+    <h2>4. &lt;body&gt; 主体</h2>
+    <p>主体包含所有用户可见的内容：文本、图片、链接、表单等。</p>
+
+    <hr />
+
+    <h2>练习</h2>
+    <p>打开浏览器开发者工具（F12），查看此页面的 DOM 结构。</p>
+
+    <!-- 这是 HTML 注释，不会显示在页面上 -->
+
+    <script>
+      // JavaScript 代码
+      console.log("HTML 文档已加载！");
+      console.log("文档标题：", document.title);
+      console.log("文档语言：", document.documentElement.lang);
+    </script>
+  </body>
+</html>

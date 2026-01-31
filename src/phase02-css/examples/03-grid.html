@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Grid 布局示例</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, sans-serif;
+        background: #1a1a2e;
+        color: #eee;
+        padding: 20px;
+      }
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #667eea;
+      }
+      h2 {
+        color: #667eea;
+        margin: 20px 0 10px;
+        border-bottom: 2px solid #667eea;
+        padding-bottom: 8px;
+      }
+      .section {
+        background: #16213e;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+      }
+      pre {
+        background: #0f0f1a;
+        color: #a5d6ff;
+        padding: 12px;
+        border-radius: 6px;
+        margin: 10px 0;
+        overflow-x: auto;
+        font-size: 13px;
+      }
+      .grid {
+        display: grid;
+        gap: 10px;
+        background: #0f0f1a;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+      }
+      .item {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: #fff;
+        padding: 20px;
+        border-radius: 6px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Demos */
+      .demo1 {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 80px);
+      }
+      .demo2 {
+        grid-template-columns: 100px 1fr 2fr;
+      }
+      .demo3 {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      }
+      .demo4 {
+        grid-template-columns: 150px 1fr;
+        grid-template-rows: auto 1fr auto;
+        grid-template-areas: "h h" "s m" "f f";
+        min-height: 250px;
+      }
+      .demo4 .h {
+        grid-area: h;
+      }
+      .demo4 .s {
+        grid-area: s;
+        background: #4a5568;
+      }
+      .demo4 .m {
+        grid-area: m;
+        background: #6c5ce7;
+      }
+      .demo4 .f {
+        grid-area: f;
+        background: #00b894;
+      }
+      .demo5 {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(2, 70px);
+      }
+      .demo5 .col2 {
+        grid-column: span 2;
+        background: linear-gradient(135deg, #f093fb, #f5576c);
+      }
+      .demo5 .row2 {
+        grid-row: span 2;
+        background: linear-gradient(135deg, #4facfe, #00f2fe);
+      }
+
+      .note {
+        background: rgba(102, 126, 234, 0.2);
+        border-left: 3px solid #667eea;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 0 6px 6px 0;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>📐 CSS Grid 布局</h1>
+
+    <div class="section">
+      <h2>1. 基础网格</h2>
+      <pre>
+grid-template-columns: repeat(3, 1fr);
+grid-template-rows: repeat(2, 80px);</pre
+      >
+      <div class="grid demo1">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">6</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>2. 混合单位</h2>
+      <pre>grid-template-columns: 100px 1fr 2fr;</pre>
+      <div class="grid demo2">
+        <div class="item">100px</div>
+        <div class="item">1fr</div>
+        <div class="item">2fr</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>3. 自适应列数（响应式）</h2>
+      <pre>grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));</pre>
+      <div class="grid demo3">
+        <div class="item">A</div>
+        <div class="item">B</div>
+        <div class="item">C</div>
+        <div class="item">D</div>
+        <div class="item">E</div>
+        <div class="item">F</div>
+      </div>
+      <div class="note">↑ 调整窗口宽度，观察列数自动变化</div>
+    </div>
+
+    <div class="section">
+      <h2>4. 命名区域</h2>
+      <pre>
+grid-template-areas:
+    "h h" "s m" "f f";</pre
+      >
+      <div class="grid demo4">
+        <div class="item h">Header</div>
+        <div class="item s">Sidebar</div>
+        <div class="item m">Main</div>
+        <div class="item f">Footer</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>5. 跨行跨列</h2>
+      <pre>
+grid-column: span 2;  /* 跨2列 */
+grid-row: span 2;     /* 跨2行 */</pre
+      >
+      <div class="grid demo5">
+        <div class="item col2">跨2列</div>
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item row2">跨2行</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+      </div>
+    </div>
+  </body>
+</html>

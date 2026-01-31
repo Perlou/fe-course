@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>本地存储</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #f5f5f5;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      h2 {
+        color: #667eea;
+        margin-top: 30px;
+        border-bottom: 2px solid #667eea;
+        padding-bottom: 8px;
+      }
+      .demo {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin: 15px 0;
+      }
+      pre {
+        background: #2d2d2d;
+        color: #f8f8f2;
+        padding: 12px;
+        border-radius: 6px;
+        overflow-x: auto;
+        font-size: 13px;
+      }
+      button {
+        padding: 8px 16px;
+        background: #667eea;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        margin: 5px;
+      }
+      button:hover {
+        background: #5a6fd6;
+      }
+      button.danger {
+        background: #dc3545;
+      }
+      .output {
+        background: #f0f0f0;
+        padding: 15px;
+        border-radius: 6px;
+        margin-top: 10px;
+        font-family: monospace;
+        max-height: 200px;
+        overflow-y: auto;
+      }
+      input,
+      textarea {
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        width: 100%;
+        margin: 5px 0;
+        box-sizing: border-box;
+      }
+      input:focus,
+      textarea:focus {
+        border-color: #667eea;
+        outline: none;
+      }
+      .storage-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background: #f8f9fa;
+        margin: 5px 0;
+        border-radius: 6px;
+      }
+      .storage-item .key {
+        font-weight: bold;
+        color: #667eea;
+      }
+      .storage-item .value {
+        color: #666;
+        flex: 1;
+        margin: 0 15px;
+        word-break: break-all;
+      }
+      .note {
+        background: #e3f2fd;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 4px solid #667eea;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        background: #f8f9fa;
+      }
+      .theme-preview {
+        padding: 30px;
+        border-radius: 8px;
+        text-align: center;
+        font-size: 18px;
+        transition: all 0.3s;
+      }
+      .theme-light {
+        background: #fff;
+        color: #333;
+        border: 2px solid #ddd;
+      }
+      .theme-dark {
+        background: #2d2d2d;
+        color: #f8f8f2;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>💾 本地存储</h1>
+
+    <!-- localStorage vs sessionStorage -->
+    <h2>1. localStorage vs sessionStorage</h2>
+    <div class="demo">
+      <table>
+        <tr>
+          <th>特性</th>
+          <th>localStorage</th>
+          <th>sessionStorage</th>
+        </tr>
+        <tr>
+          <td>生命周期</td>
+          <td>永久存储 (除非手动清除)</td>
+          <td>关闭标签页后清除</td>
+        </tr>
+        <tr>
+          <td>作用域</td>
+          <td>同源所有标签页共享</td>
+          <td>仅当前标签页</td>
+        </tr>
+        <tr>
+          <td>容量</td>
+          <td colspan="2">约 5MB</td>
+        </tr>
+        <tr>
+          <td>数据类型</td>
+          <td colspan="2">只能存储字符串</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- 基本 API -->
+    <h2>2. 基本 API</h2>
+    <div class="demo">
+      <pre>
+// 存储
+localStorage.setItem('key', 'value');
+sessionStorage.setItem('key', 'value');
+
+// 读取
+const value = localStorage.getItem('key');
+
+// 删除
+localStorage.removeItem('key');
+
+// 清空所有
+localStorage.clear();
+
+// 获取存储项数量
+localStorage.length;
+
+// 获取第 n 个键名
+localStorage.key(0);</pre
+      >
+      <div style="display: flex; gap: 10px; margin-bottom: 10px">
+        <input
+          type="text"
+          id="keyInput"
+          placeholder="键 (key)"
+          style="flex: 1"
+        />
+        <input
+          type="text"
+          id="valueInput"
+          placeholder="值 (value)"
+          style="flex: 2"
+        />
+      </div>
+      <button onclick="saveToLocal()">存入 localStorage</button>
+      <button onclick="saveToSession()">存入 sessionStorage</button>
+      <button onclick="loadStorage()">查看存储</button>
+      <button onclick="clearAll()" class="danger">清空所有</button>
+      <div class="output" id="output2"></div>
+    </div>
+
+    <!-- 存储对象和数组 -->
+    <h2>3. 存储对象和数组 (JSON)</h2>
+    <div class="demo">
+      <pre>
+// 存储对象
+const user = { name: '张三', age: 25 };
+localStorage.setItem('user', JSON.stringify(user));
+
+// 读取对象
+const stored = JSON.parse(localStorage.getItem('user'));</pre
+      >
+      <textarea
+        id="jsonInput"
+        rows="4"
+        placeholder='输入 JSON 对象，例如: {"name": "张三", "age": 25}'
+      ></textarea>
+      <button onclick="saveJson()">保存 JSON</button>
+      <button onclick="loadJson()">读取 JSON</button>
+      <div class="output" id="output3"></div>
+    </div>
+
+    <!-- 实际应用：主题切换 -->
+    <h2>4. 实际应用：主题切换 (持久化)</h2>
+    <div class="demo">
+      <div class="theme-preview" id="themePreview">主题预览区域</div>
+      <br />
+      <button onclick="setTheme('light')">☀️ 浅色主题</button>
+      <button onclick="setTheme('dark')">🌙 深色主题</button>
+      <p style="color: #666; margin-top: 10px">刷新页面后主题仍会保持</p>
+    </div>
+
+    <!-- 实际应用：表单自动保存 -->
+    <h2>5. 实际应用：表单自动保存</h2>
+    <div class="demo">
+      <div class="note">
+        在下方输入内容，数据会自动保存到 localStorage。刷新页面后内容仍在！
+      </div>
+      <input
+        type="text"
+        id="draftTitle"
+        placeholder="标题"
+        onInput="saveDraft()"
+      />
+      <textarea
+        id="draftContent"
+        rows="4"
+        placeholder="内容..."
+        onInput="saveDraft()"
+      ></textarea>
+      <button onclick="clearDraft()" class="danger">清空草稿</button>
+      <span id="draftStatus" style="color: #28a745; margin-left: 10px"></span>
+    </div>
+
+    <!-- storage 事件 -->
+    <h2>6. storage 事件 (跨标签页通信)</h2>
+    <div class="demo">
+      <pre>
+// 当其他标签页修改 localStorage 时触发
+window.addEventListener('storage', (e) => {
+    console.log('Key:', e.key);
+    console.log('旧值:', e.oldValue);
+    console.log('新值:', e.newValue);
+    console.log('URL:', e.url);
+});</pre
+      >
+      <p>
+        打开此页面的另一个标签页，在一个标签页中修改存储，另一个会收到通知。
+      </p>
+      <button onclick="triggerStorageEvent()">触发存储变化</button>
+      <div class="output" id="output6">等待其他标签页的存储变化...</div>
+    </div>
+
+    <!-- 存储封装工具 -->
+    <h2>7. 存储工具封装</h2>
+    <div class="demo">
+      <pre>
+const storage = {
+    set(key, value, expires) {
+        const data = {
+            value,
+            expires: expires ? Date.now() + expires : null
+        };
+        localStorage.setItem(key, JSON.stringify(data));
+    },
+    
+    get(key) {
+        const item = localStorage.getItem(key);
+        if (!item) return null;
+        
+        const data = JSON.parse(item);
+        if (data.expires && Date.now() > data.expires) {
+            localStorage.removeItem(key);
+            return null;
+        }
+        return data.value;
+    },
+    
+    remove(key) {
+        localStorage.removeItem(key);
+    }
+};</pre
+      >
+      <button onclick="demo7a()">存储 (5秒过期)</button>
+      <button onclick="demo7b()">读取</button>
+      <div class="output" id="output7"></div>
+    </div>
+
+    <script>
+      // 工具函数
+      function log(id, content) {
+        document.getElementById(id).innerHTML = content;
+      }
+
+      // 2. 基本 API
+      function saveToLocal() {
+        const key = document.getElementById("keyInput").value.trim();
+        const value = document.getElementById("valueInput").value;
+        if (!key) return alert("请输入键名");
+        localStorage.setItem(key, value);
+        loadStorage();
+      }
+
+      function saveToSession() {
+        const key = document.getElementById("keyInput").value.trim();
+        const value = document.getElementById("valueInput").value;
+        if (!key) return alert("请输入键名");
+        sessionStorage.setItem(key, value);
+        loadStorage();
+      }
+
+      function loadStorage() {
+        let html = "<strong>localStorage:</strong><br>";
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          const value = localStorage.getItem(key);
+          html += `<div class="storage-item">
+                    <span class="key">${key}</span>
+                    <span class="value">${value.substring(0, 50)}${value.length > 50 ? "..." : ""}</span>
+                    <button onclick="removeItem('local', '${key}')">删除</button>
+                </div>`;
+        }
+
+        html += "<br><strong>sessionStorage:</strong><br>";
+        for (let i = 0; i < sessionStorage.length; i++) {
+          const key = sessionStorage.key(i);
+          const value = sessionStorage.getItem(key);
+          html += `<div class="storage-item">
+                    <span class="key">${key}</span>
+                    <span class="value">${value.substring(0, 50)}${value.length > 50 ? "..." : ""}</span>
+                    <button onclick="removeItem('session', '${key}')">删除</button>
+                </div>`;
+        }
+
+        log("output2", html);
+      }
+
+      function removeItem(type, key) {
+        if (type === "local") {
+          localStorage.removeItem(key);
+        } else {
+          sessionStorage.removeItem(key);
+        }
+        loadStorage();
+      }
+
+      function clearAll() {
+        if (confirm("确定要清空所有存储吗？")) {
+          localStorage.clear();
+          sessionStorage.clear();
+          loadStorage();
+        }
+      }
+
+      // 3. JSON 存储
+      function saveJson() {
+        const input = document.getElementById("jsonInput").value.trim();
+        try {
+          const obj = JSON.parse(input);
+          localStorage.setItem("jsonDemo", JSON.stringify(obj));
+          log("output3", "保存成功: " + JSON.stringify(obj, null, 2));
+        } catch (e) {
+          log("output3", "错误: 无效的 JSON 格式");
+        }
+      }
+
+      function loadJson() {
+        const stored = localStorage.getItem("jsonDemo");
+        if (stored) {
+          const obj = JSON.parse(stored);
+          log(
+            "output3",
+            "读取成功:<br><pre>" + JSON.stringify(obj, null, 2) + "</pre>",
+          );
+        } else {
+          log("output3", "没有存储的 JSON 数据");
+        }
+      }
+
+      // 4. 主题切换
+      function setTheme(theme) {
+        const preview = document.getElementById("themePreview");
+        preview.className = "theme-preview theme-" + theme;
+        preview.textContent = theme === "dark" ? "🌙 深色主题" : "☀️ 浅色主题";
+        localStorage.setItem("theme", theme);
+      }
+
+      // 初始化主题
+      (function initTheme() {
+        const savedTheme = localStorage.getItem("theme") || "light";
+        setTheme(savedTheme);
+      })();
+
+      // 5. 表单自动保存
+      function saveDraft() {
+        const draft = {
+          title: document.getElementById("draftTitle").value,
+          content: document.getElementById("draftContent").value,
+          savedAt: new Date().toLocaleTimeString(),
+        };
+        localStorage.setItem("draft", JSON.stringify(draft));
+        document.getElementById("draftStatus").textContent =
+          "已自动保存 " + draft.savedAt;
+      }
+
+      function loadDraft() {
+        const saved = localStorage.getItem("draft");
+        if (saved) {
+          const draft = JSON.parse(saved);
+          document.getElementById("draftTitle").value = draft.title || "";
+          document.getElementById("draftContent").value = draft.content || "";
+          if (draft.savedAt) {
+            document.getElementById("draftStatus").textContent =
+              "上次保存 " + draft.savedAt;
+          }
+        }
+      }
+
+      function clearDraft() {
+        localStorage.removeItem("draft");
+        document.getElementById("draftTitle").value = "";
+        document.getElementById("draftContent").value = "";
+        document.getElementById("draftStatus").textContent = "草稿已清空";
+      }
+
+      // 初始化加载草稿
+      loadDraft();
+
+      // 6. storage 事件
+      window.addEventListener("storage", (e) => {
+        log(
+          "output6",
+          `
+                <strong>检测到存储变化:</strong><br>
+                Key: ${e.key}<br>
+                旧值: ${e.oldValue}<br>
+                新值: ${e.newValue}<br>
+                URL: ${e.url}<br>
+                时间: ${new Date().toLocaleTimeString()}
+            `,
+        );
+      });
+
+      function triggerStorageEvent() {
+        localStorage.setItem("broadcast", Date.now().toString());
+        log("output6", "已触发存储变化，在其他标签页中会收到通知");
+      }
+
+      // 7. 存储工具封装
+      const storage = {
+        set(key, value, expires) {
+          const data = {
+            value,
+            expires: expires ? Date.now() + expires : null,
+          };
+          localStorage.setItem(key, JSON.stringify(data));
+        },
+
+        get(key) {
+          const item = localStorage.getItem(key);
+          if (!item) return null;
+
+          try {
+            const data = JSON.parse(item);
+            if (data.expires && Date.now() > data.expires) {
+              localStorage.removeItem(key);
+              return null;
+            }
+            return data.value;
+          } catch {
+            return item;
+          }
+        },
+
+        remove(key) {
+          localStorage.removeItem(key);
+        },
+      };
+
+      function demo7a() {
+        storage.set(
+          "tempData",
+          { message: "Hello!", time: new Date().toLocaleTimeString() },
+          5000,
+        );
+        log("output7", "已存储数据，5秒后过期");
+      }
+
+      function demo7b() {
+        const data = storage.get("tempData");
+        if (data) {
+          log("output7", "读取成功: " + JSON.stringify(data));
+        } else {
+          log("output7", "数据不存在或已过期");
+        }
+      }
+
+      // 初始加载存储内容
+      loadStorage();
+    </script>
+  </body>
+</html>

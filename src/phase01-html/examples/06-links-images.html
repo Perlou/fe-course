@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML 链接与图片</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        line-height: 1.8;
+      }
+      h1 {
+        color: #333;
+        text-align: center;
+      }
+      h2 {
+        color: #667eea;
+        margin-top: 30px;
+        border-bottom: 2px solid #667eea;
+        padding-bottom: 8px;
+      }
+      .demo {
+        background: #f5f5f5;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 15px 0;
+      }
+      pre {
+        background: #2d2d2d;
+        color: #f8f8f2;
+        padding: 15px;
+        border-radius: 8px;
+        overflow-x: auto;
+        font-size: 13px;
+      }
+      a {
+        color: #667eea;
+      }
+      .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background: #667eea;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        margin: 5px;
+      }
+      .btn:hover {
+        background: #5a6fd6;
+      }
+      img {
+        max-width: 100%;
+        border-radius: 8px;
+      }
+      figure {
+        margin: 0;
+        text-align: center;
+      }
+      figcaption {
+        color: #666;
+        font-style: italic;
+        margin-top: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🔗 HTML 链接与图片</h1>
+
+    <h2>1. 基本链接</h2>
+    <div class="demo">
+      <p><a href="https://www.google.com">普通链接</a></p>
+      <p>
+        <a href="https://www.google.com" target="_blank"
+          >新窗口打开（target="_blank"）</a
+        >
+      </p>
+      <p>
+        <a
+          href="https://www.google.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          >安全的外部链接</a
+        >
+      </p>
+    </div>
+    <pre>
+&lt;a href="https://example.com" target="_blank" rel="noopener noreferrer"&gt;安全链接&lt;/a&gt;</pre
+    >
+
+    <h2>2. 页内锚点链接</h2>
+    <div class="demo">
+      <p>
+        <a href="#section1">跳转到章节1</a> |
+        <a href="#section2">跳转到章节2</a> | <a href="#top">回到顶部</a>
+      </p>
+    </div>
+    <pre>
+&lt;a href="#section1"&gt;跳转到章节1&lt;/a&gt;
+&lt;div id="section1"&gt;...&lt;/div&gt;</pre
+    >
+
+    <h2>3. 特殊链接</h2>
+    <div class="demo">
+      <p><a href="mailto:example@email.com">📧 发送邮件</a></p>
+      <p>
+        <a href="mailto:example@email.com?subject=咨询&body=你好"
+          >📧 带主题和内容</a
+        >
+      </p>
+      <p><a href="tel:+8613800138000">📞 拨打电话</a></p>
+      <p><a href="javascript:alert('Hello!')">⚡ JavaScript 链接</a></p>
+    </div>
+
+    <h2>4. 下载链接</h2>
+    <div class="demo">
+      <a
+        href="data:text/plain;charset=utf-8,Hello World"
+        download="hello.txt"
+        class="btn"
+        >📥 下载文本文件</a
+      >
+    </div>
+    <pre>
+&lt;a href="document.pdf" download&gt;下载 PDF&lt;/a&gt;
+&lt;a href="image.png" download="my-image.png"&gt;下载图片（重命名）&lt;/a&gt;</pre
+    >
+
+    <h2 id="section1">5. 基本图片</h2>
+    <div class="demo">
+      <img
+        src="https://via.placeholder.com/400x200/667eea/ffffff?text=Basic+Image"
+        alt="示例图片"
+        width="400"
+        height="200"
+      />
+    </div>
+    <pre>
+&lt;img src="image.jpg" alt="图片描述" width="400" height="200"&gt;</pre
+    >
+
+    <h2>6. 带链接的图片</h2>
+    <div class="demo">
+      <a href="https://example.com" target="_blank">
+        <img
+          src="https://via.placeholder.com/300x150/764ba2/ffffff?text=Click+Me"
+          alt="可点击的图片"
+        />
+      </a>
+    </div>
+
+    <h2 id="section2">7. 图片与说明文字</h2>
+    <div class="demo">
+      <figure>
+        <img
+          src="https://via.placeholder.com/500x300/43e97b/ffffff?text=Beautiful+Landscape"
+          alt="美丽的风景"
+        />
+        <figcaption>图1：使用 figure 和 figcaption 添加图片说明</figcaption>
+      </figure>
+    </div>
+    <pre>
+&lt;figure&gt;
+    &lt;img src="image.jpg" alt="描述"&gt;
+    &lt;figcaption&gt;图片说明&lt;/figcaption&gt;
+&lt;/figure&gt;</pre
+    >
+
+    <h2>8. 响应式图片</h2>
+    <div class="demo">
+      <picture>
+        <source
+          media="(min-width: 800px)"
+          srcset="
+            https://via.placeholder.com/800x300/667eea/ffffff?text=Large+Screen
+          "
+        />
+        <source
+          media="(min-width: 400px)"
+          srcset="
+            https://via.placeholder.com/500x200/764ba2/ffffff?text=Medium+Screen
+          "
+        />
+        <img
+          src="https://via.placeholder.com/300x150/ec4899/ffffff?text=Small"
+          alt="响应式图片"
+          style="width: 100%"
+        />
+      </picture>
+      <p style="color: #666; text-align: center; margin-top: 10px">
+        ↑ 调整浏览器宽度查看图片变化
+      </p>
+    </div>
+    <pre>
+&lt;picture&gt;
+    &lt;source media="(min-width: 800px)" srcset="large.jpg"&gt;
+    &lt;source media="(min-width: 400px)" srcset="medium.jpg"&gt;
+    &lt;img src="small.jpg" alt="响应式图片"&gt;
+&lt;/picture&gt;</pre
+    >
+
+    <h2>9. 懒加载图片</h2>
+    <div class="demo">
+      <img
+        src="https://via.placeholder.com/400x200/00b894/ffffff?text=Lazy+Loaded"
+        alt="懒加载图片"
+        loading="lazy"
+      />
+      <p style="color: #666">loading="lazy" 属性让图片在进入视口时才加载</p>
+    </div>
+
+    <h2>10. 图片映射（Image Map）</h2>
+    <div class="demo">
+      <img
+        src="https://via.placeholder.com/400x200/2d3436/ffffff?text=Click+Areas"
+        alt="可点击区域"
+        usemap="#workmap"
+      />
+      <map name="workmap">
+        <area
+          shape="rect"
+          coords="0,0,200,200"
+          alt="左边区域"
+          href="#section1"
+          title="左边区域"
+        />
+        <area
+          shape="rect"
+          coords="200,0,400,200"
+          alt="右边区域"
+          href="#section2"
+          title="右边区域"
+        />
+      </map>
+      <p style="color: #666">↑ 点击图片的左半边或右半边</p>
+    </div>
+
+    <div id="top"></div>
+  </body>
+</html>

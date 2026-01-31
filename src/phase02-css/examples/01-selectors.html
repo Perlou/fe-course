@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS 选择器示例</title>
+    <style>
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.6;
+        padding: 20px;
+        max-width: 900px;
+        margin: 0 auto;
+        background-color: #f5f5f5;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+      }
+
+      h2 {
+        color: #667eea;
+        border-bottom: 2px solid #667eea;
+        padding-bottom: 10px;
+        margin-top: 40px;
+      }
+
+      .demo-box {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+
+      code {
+        background: #f4f4f4;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-family: "Monaco", "Menlo", monospace;
+      }
+
+      pre {
+        background: #2d2d2d;
+        color: #f8f8f2;
+        padding: 15px;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 10px 0;
+      }
+
+      /* ========== 选择器演示 ========== */
+
+      /* 1. 元素选择器 */
+      .demo-element p {
+        color: #333;
+        padding: 8px;
+        background: #e3f2fd;
+        margin: 5px 0;
+      }
+
+      /* 2. 类选择器 */
+      .highlight {
+        background-color: #fff3cd !important;
+        font-weight: bold;
+      }
+
+      .success {
+        color: #28a745 !important;
+      }
+      .error {
+        color: #dc3545 !important;
+      }
+      .info {
+        color: #17a2b8 !important;
+      }
+
+      /* 3. ID 选择器 */
+      #unique-element {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+      }
+
+      /* 4. 后代选择器 */
+      .ancestor .descendant {
+        color: #764ba2;
+        font-style: italic;
+      }
+
+      /* 5. 子选择器 */
+      .parent > .child {
+        border-left: 4px solid #667eea;
+        padding-left: 10px;
+        margin: 5px 0;
+      }
+
+      /* 6. 相邻兄弟选择器 */
+      .demo-sibling h3 + p {
+        color: #667eea;
+        font-size: 1.1em;
+      }
+
+      /* 7. 通用兄弟选择器 */
+      .demo-sibling h3 ~ p {
+        padding-left: 15px;
+        border-left: 2px solid #ddd;
+      }
+
+      /* 8. 属性选择器 */
+      [data-status] {
+        padding: 5px 10px;
+        border-radius: 4px;
+        display: inline-block;
+        margin: 3px;
+      }
+
+      [data-status="active"] {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      [data-status="pending"] {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      [data-status="inactive"] {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      a[href^="https"] {
+        color: #28a745;
+      }
+
+      a[href$=".pdf"]::after {
+        content: " 📄";
+      }
+
+      a[href*="example"] {
+        font-weight: bold;
+      }
+
+      /* 9. 伪类选择器 */
+      .demo-list li:first-child {
+        font-weight: bold;
+        color: #667eea;
+      }
+
+      .demo-list li:last-child {
+        border-bottom: none;
+      }
+
+      .demo-list li:nth-child(even) {
+        background: #f8f9fa;
+      }
+
+      .demo-list li:nth-child(odd) {
+        background: white;
+      }
+
+      .demo-list li:hover {
+        background: #e3f2fd;
+        cursor: pointer;
+      }
+
+      .demo-list li {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        transition: background 0.3s;
+      }
+
+      /* 10. 表单伪类 */
+      .demo-form input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+      }
+
+      .demo-form input:valid {
+        border-color: #28a745;
+      }
+
+      .demo-form input:invalid:not(:placeholder-shown) {
+        border-color: #dc3545;
+      }
+
+      .demo-form input:disabled {
+        background: #e9ecef;
+        cursor: not-allowed;
+      }
+
+      .demo-form input {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        transition: all 0.3s;
+      }
+
+      /* 11. :not() 伪类 */
+      .demo-not p:not(.special) {
+        color: #666;
+      }
+
+      .demo-not p.special {
+        color: #667eea;
+        font-weight: bold;
+        font-size: 1.2em;
+      }
+
+      /* 12. 伪元素 */
+      .demo-pseudo .quote::before {
+        content: '"';
+        font-size: 2em;
+        color: #667eea;
+        vertical-align: -0.3em;
+      }
+
+      .demo-pseudo .quote::after {
+        content: '"';
+        font-size: 2em;
+        color: #667eea;
+        vertical-align: -0.3em;
+      }
+
+      .demo-pseudo .required::before {
+        content: "* ";
+        color: #dc3545;
+      }
+
+      .demo-pseudo p::first-letter {
+        font-size: 2em;
+        font-weight: bold;
+        color: #667eea;
+        float: left;
+        margin-right: 5px;
+        line-height: 1;
+      }
+
+      .demo-pseudo p::first-line {
+        font-weight: bold;
+      }
+
+      ::selection {
+        background: #667eea;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🎯 CSS 选择器完全指南</h1>
+
+    <!-- 元素选择器 -->
+    <h2>1. 元素选择器</h2>
+    <div class="demo-box demo-element">
+      <pre>p { color: #333; }</pre>
+      <p>这是一个段落，使用元素选择器设置样式。</p>
+      <p>另一个段落，同样被选中。</p>
+    </div>
+
+    <!-- 类选择器 -->
+    <h2>2. 类选择器</h2>
+    <div class="demo-box">
+      <pre>.highlight { background-color: yellow; }</pre>
+      <p>普通文本</p>
+      <p class="highlight">高亮文本</p>
+      <p class="success">成功消息</p>
+      <p class="error">错误消息</p>
+      <p class="info">信息提示</p>
+    </div>
+
+    <!-- ID 选择器 -->
+    <h2>3. ID 选择器</h2>
+    <div class="demo-box">
+      <pre>#unique-element { background: gradient; }</pre>
+      <div id="unique-element">这是唯一的元素，使用 ID 选择器</div>
+    </div>
+
+    <!-- 组合选择器 -->
+    <h2>4. 后代选择器（空格）</h2>
+    <div class="demo-box ancestor">
+      <pre>.ancestor .descendant { color: purple; }</pre>
+      <div>
+        <p class="descendant">直接子元素也会被选中</p>
+        <div>
+          <p class="descendant">嵌套深层的后代也会被选中</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 子选择器 -->
+    <h2>5. 子选择器（>）</h2>
+    <div class="demo-box parent">
+      <pre>.parent > .child { border-left: 4px solid blue; }</pre>
+      <p class="child">✅ 直接子元素会被选中</p>
+      <div>
+        <p class="child">
+          ❌ 嵌套的元素不会被选中（实际上因为CSS继承关系可能看起来不明显）
+        </p>
+      </div>
+    </div>
+
+    <!-- 兄弟选择器 -->
+    <h2>6. 兄弟选择器</h2>
+    <div class="demo-box demo-sibling">
+      <pre>
+h3 + p { ... } /* 相邻兄弟 */
+h3 ~ p { ... } /* 通用兄弟 */</pre
+      >
+      <h3>标题</h3>
+      <p>紧跟 h3 后的段落（相邻兄弟 + 通用兄弟 ~）</p>
+      <p>第二个段落（仅通用兄弟 ~）</p>
+      <p>第三个段落（仅通用兄弟 ~）</p>
+    </div>
+
+    <!-- 属性选择器 -->
+    <h2>7. 属性选择器</h2>
+    <div class="demo-box">
+      <pre>
+[data-status="active"] { background: green; }
+a[href^="https"] { color: green; }
+a[href$=".pdf"]::after { content: " 📄"; }</pre
+      >
+
+      <p>状态标签：</p>
+      <span data-status="active">Active</span>
+      <span data-status="pending">Pending</span>
+      <span data-status="inactive">Inactive</span>
+
+      <p style="margin-top: 15px">链接示例：</p>
+      <a href="https://example.com">HTTPS 链接（绿色）</a><br />
+      <a href="http://example.com">HTTP 链接</a><br />
+      <a href="document.pdf">PDF 文件（带图标）</a>
+    </div>
+
+    <!-- 结构伪类 -->
+    <h2>8. 结构伪类选择器</h2>
+    <div class="demo-box">
+      <pre>
+li:first-child { font-weight: bold; }
+li:nth-child(even) { background: #f8f9fa; }
+li:hover { background: #e3f2fd; }</pre
+      >
+
+      <ul class="demo-list">
+        <li>第 1 项（:first-child）</li>
+        <li>第 2 项（偶数行）</li>
+        <li>第 3 项（奇数行）</li>
+        <li>第 4 项（偶数行）</li>
+        <li>第 5 项（:last-child）</li>
+      </ul>
+    </div>
+
+    <!-- 表单伪类 -->
+    <h2>9. 表单伪类选择器</h2>
+    <div class="demo-box demo-form">
+      <pre>
+input:focus { border-color: blue; }
+input:valid { border-color: green; }
+input:invalid { border-color: red; }</pre
+      >
+
+      <input type="email" placeholder="输入邮箱（:valid/:invalid）" />
+      <input type="text" placeholder="普通文本（点击看 :focus 效果）" />
+      <input type="text" value="禁用状态" disabled />
+    </div>
+
+    <!-- :not() 伪类 -->
+    <h2>10. :not() 否定伪类</h2>
+    <div class="demo-box demo-not">
+      <pre>p:not(.special) { color: gray; }</pre>
+
+      <p>普通段落（灰色）</p>
+      <p>另一个普通段落（灰色）</p>
+      <p class="special">特殊段落（紫色加粗）</p>
+    </div>
+
+    <!-- 伪元素 -->
+    <h2>11. 伪元素选择器</h2>
+    <div class="demo-box demo-pseudo">
+      <pre>
+.quote::before { content: '"'; }
+.quote::after { content: '"'; }
+p::first-letter { font-size: 2em; }</pre
+      >
+
+      <p class="quote">这是一段引用文字，前后自动添加引号</p>
+      <p class="required">这是必填字段（前面有红色星号）</p>
+      <p>
+        这是一段普通文字，注意观察首字母和首行的样式变化。这是为了演示
+        ::first-letter 和 ::first-line
+        伪元素的效果，当文字足够长时，只有第一行会加粗。
+      </p>
+
+      <p style="margin-top: 15px">
+        <strong>试试选中这段文字</strong>（::selection 伪元素）
+      </p>
+    </div>
+  </body>
+</html>

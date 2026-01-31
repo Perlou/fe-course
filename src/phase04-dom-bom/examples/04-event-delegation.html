@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>事件委托</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #f5f5f5;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      h2 {
+        color: #667eea;
+        margin-top: 30px;
+        border-bottom: 2px solid #667eea;
+        padding-bottom: 8px;
+      }
+      .demo {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin: 15px 0;
+      }
+      pre {
+        background: #2d2d2d;
+        color: #f8f8f2;
+        padding: 12px;
+        border-radius: 6px;
+        overflow-x: auto;
+        font-size: 13px;
+      }
+      button {
+        padding: 8px 16px;
+        background: #667eea;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        margin: 5px;
+      }
+      button:hover {
+        background: #5a6fd6;
+      }
+      .output {
+        background: #f0f0f0;
+        padding: 15px;
+        border-radius: 6px;
+        margin-top: 10px;
+        font-family: monospace;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+      li {
+        padding: 12px 15px;
+        background: #f8f9fa;
+        margin: 8px 0;
+        border-radius: 6px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.3s;
+      }
+      li:hover {
+        background: #e3f2fd;
+      }
+      .btn-delete {
+        background: #dc3545;
+        padding: 5px 12px;
+        font-size: 14px;
+      }
+      .btn-edit {
+        background: #28a745;
+        padding: 5px 12px;
+        font-size: 14px;
+      }
+      input[type="text"] {
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        flex: 1;
+        margin-right: 10px;
+      }
+      .add-form {
+        display: flex;
+        margin-bottom: 15px;
+      }
+      .note {
+        background: #e3f2fd;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 4px solid #667eea;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 10px;
+      }
+      .grid-item {
+        padding: 30px 20px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        text-align: center;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+      .grid-item:hover {
+        transform: scale(1.05);
+      }
+      .tab-container {
+        display: flex;
+        border-bottom: 2px solid #ddd;
+      }
+      .tab {
+        padding: 12px 24px;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+        margin-bottom: -2px;
+        transition: all 0.3s;
+      }
+      .tab:hover {
+        background: #f0f0f0;
+      }
+      .tab.active {
+        border-bottom-color: #667eea;
+        color: #667eea;
+        font-weight: bold;
+      }
+      .tab-content {
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 0 0 8px 8px;
+        min-height: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🎯 事件委托 (Event Delegation)</h1>
+
+    <div class="note">
+      <strong>什么是事件委托？</strong><br />
+      利用事件冒泡机制，将子元素的事件处理程序绑定到父元素上。
+      <br /><br />
+      <strong>优点：</strong>
+      <ul>
+        <li>✅ 减少事件监听器数量，提高性能</li>
+        <li>✅ 动态添加的子元素自动拥有事件处理</li>
+        <li>✅ 减少内存占用</li>
+      </ul>
+    </div>
+
+    <!-- 基础事件委托 -->
+    <h2>1. 基础事件委托</h2>
+    <div class="demo">
+      <pre>
+// 不使用事件委托 (❌ 需要为每个按钮绑定)
+buttons.forEach(btn => btn.addEventListener('click', handler));
+
+// 使用事件委托 (✅ 只绑定到父元素)
+parent.addEventListener('click', (e) => {
+    if (e.target.matches('.btn')) {
+        // 处理点击
+    }
+});</pre
+      >
+      <div class="grid" id="grid1">
+        <div class="grid-item" data-id="1">Item 1</div>
+        <div class="grid-item" data-id="2">Item 2</div>
+        <div class="grid-item" data-id="3">Item 3</div>
+        <div class="grid-item" data-id="4">Item 4</div>
+        <div class="grid-item" data-id="5">Item 5</div>
+        <div class="grid-item" data-id="6">Item 6</div>
+      </div>
+      <button onclick="addGridItem()">添加新项目</button>
+      <div class="output" id="output1">点击上面的项目...</div>
+    </div>
+
+    <!-- 列表操作 -->
+    <h2>2. 列表增删改查 (实战应用)</h2>
+    <div class="demo">
+      <pre>
+list.addEventListener('click', (e) => {
+    const item = e.target.closest('li');
+    if (!item) return;
+    
+    if (e.target.matches('.btn-delete')) {
+        item.remove();
+    } else if (e.target.matches('.btn-edit')) {
+        // 编辑逻辑
+    }
+});</pre
+      >
+      <div class="add-form">
+        <input type="text" id="newItemInput" placeholder="输入新项目名称..." />
+        <button onclick="addListItem()">添加</button>
+      </div>
+      <ul id="list2">
+        <li>
+          <span>学习 JavaScript</span>
+          <div>
+            <button class="btn-edit">编辑</button>
+            <button class="btn-delete">删除</button>
+          </div>
+        </li>
+        <li>
+          <span>练习 DOM 操作</span>
+          <div>
+            <button class="btn-edit">编辑</button>
+            <button class="btn-delete">删除</button>
+          </div>
+        </li>
+        <li>
+          <span>掌握事件委托</span>
+          <div>
+            <button class="btn-edit">编辑</button>
+            <button class="btn-delete">删除</button>
+          </div>
+        </li>
+      </ul>
+      <div class="output" id="output2">操作日志...</div>
+    </div>
+
+    <!-- Tab 切换 -->
+    <h2>3. Tab 切换</h2>
+    <div class="demo">
+      <pre>
+tabs.addEventListener('click', (e) => {
+    if (!e.target.matches('.tab')) return;
+    
+    // 移除所有 active
+    tabs.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    // 添加 active
+    e.target.classList.add('active');
+});</pre
+      >
+      <div class="tab-container" id="tabs">
+        <div class="tab active" data-tab="home">首页</div>
+        <div class="tab" data-tab="products">产品</div>
+        <div class="tab" data-tab="about">关于</div>
+        <div class="tab" data-tab="contact">联系</div>
+      </div>
+      <div class="tab-content" id="tabContent">首页内容</div>
+    </div>
+
+    <!-- 事件委托中的 closest -->
+    <h2>4. 使用 closest() 处理嵌套结构</h2>
+    <div class="demo">
+      <pre>
+// 当点击的是子元素时，使用 closest 找到目标元素
+container.addEventListener('click', (e) => {
+    const card = e.target.closest('.card');
+    if (!card) return;
+    // card 就是我们要操作的元素
+});</pre
+      >
+      <div id="cardContainer">
+        <div class="grid-item" data-card="1">
+          <strong>卡片 1</strong>
+          <p style="font-size: 12px; margin-top: 5px">点击任意位置</p>
+        </div>
+        <div class="grid-item" data-card="2">
+          <strong>卡片 2</strong>
+          <p style="font-size: 12px; margin-top: 5px">点击任意位置</p>
+        </div>
+        <div class="grid-item" data-card="3">
+          <strong>卡片 3</strong>
+          <p style="font-size: 12px; margin-top: 5px">点击任意位置</p>
+        </div>
+      </div>
+      <div class="output" id="output4">点击卡片...</div>
+    </div>
+
+    <!-- 通用事件委托函数 -->
+    <h2>5. 封装通用事件委托函数</h2>
+    <div class="demo">
+      <pre>
+function delegate(parent, eventType, selector, handler) {
+    parent.addEventListener(eventType, function(e) {
+        const target = e.target.closest(selector);
+        if (target && parent.contains(target)) {
+            handler.call(target, e);
+        }
+    });
+}
+
+// 使用
+delegate(document.body, 'click', '.btn', function(e) {
+    console.log('被点击的按钮:', this);
+});</pre
+      >
+      <div id="delegateDemo">
+        <button class="demo-btn" data-action="save">保存</button>
+        <button class="demo-btn" data-action="cancel">取消</button>
+        <button class="demo-btn" data-action="submit">提交</button>
+      </div>
+      <div class="output" id="output5">点击按钮...</div>
+    </div>
+
+    <script>
+      // 工具函数
+      function log(id, msg) {
+        document.getElementById(id).textContent = msg;
+      }
+
+      // 通用事件委托函数
+      function delegate(parent, eventType, selector, handler) {
+        parent.addEventListener(eventType, function (e) {
+          const target = e.target.closest(selector);
+          if (target && parent.contains(target)) {
+            handler.call(target, e);
+          }
+        });
+      }
+
+      // 1. 基础事件委托
+      let gridCounter = 6;
+
+      document.getElementById("grid1").addEventListener("click", function (e) {
+        const item = e.target.closest(".grid-item");
+        if (!item) return;
+
+        const id = item.dataset.id;
+        log("output1", `点击了 Item ${id}`);
+
+        // 添加动画效果
+        item.style.transform = "scale(0.95)";
+        setTimeout(() => (item.style.transform = ""), 100);
+      });
+
+      function addGridItem() {
+        gridCounter++;
+        const grid = document.getElementById("grid1");
+        const newItem = document.createElement("div");
+        newItem.className = "grid-item";
+        newItem.dataset.id = gridCounter;
+        newItem.textContent = `Item ${gridCounter}`;
+        grid.appendChild(newItem);
+        log("output1", `添加了 Item ${gridCounter} (新元素自动拥有事件处理!)`);
+      }
+
+      // 2. 列表操作
+      document.getElementById("list2").addEventListener("click", function (e) {
+        const li = e.target.closest("li");
+        if (!li) return;
+
+        if (e.target.matches(".btn-delete")) {
+          const text = li.querySelector("span").textContent;
+          li.style.animation = "fadeOut 0.3s";
+          setTimeout(() => li.remove(), 300);
+          log("output2", `删除: ${text}`);
+        } else if (e.target.matches(".btn-edit")) {
+          const span = li.querySelector("span");
+          const newText = prompt("编辑内容:", span.textContent);
+          if (newText !== null) {
+            span.textContent = newText;
+            log("output2", `编辑为: ${newText}`);
+          }
+        }
+      });
+
+      function addListItem() {
+        const input = document.getElementById("newItemInput");
+        const text = input.value.trim();
+        if (!text) return;
+
+        const li = document.createElement("li");
+        li.innerHTML = `
+                <span>${text}</span>
+                <div>
+                    <button class="btn-edit">编辑</button>
+                    <button class="btn-delete">删除</button>
+                </div>
+            `;
+        document.getElementById("list2").appendChild(li);
+        input.value = "";
+        log("output2", `添加: ${text}`);
+      }
+
+      // Enter 键添加
+      document
+        .getElementById("newItemInput")
+        .addEventListener("keydown", function (e) {
+          if (e.key === "Enter") addListItem();
+        });
+
+      // 3. Tab 切换
+      const tabContents = {
+        home: "🏠 首页内容 - 欢迎来到我们的网站！",
+        products: "📦 产品内容 - 查看我们的精选产品...",
+        about: "📖 关于我们 - 我们是一家专注于...",
+        contact: "📞 联系我们 - 邮箱: example@mail.com",
+      };
+
+      document.getElementById("tabs").addEventListener("click", function (e) {
+        if (!e.target.matches(".tab")) return;
+
+        // 更新 active 状态
+        this.querySelectorAll(".tab").forEach((t) =>
+          t.classList.remove("active"),
+        );
+        e.target.classList.add("active");
+
+        // 更新内容
+        const tabId = e.target.dataset.tab;
+        document.getElementById("tabContent").textContent = tabContents[tabId];
+      });
+
+      // 4. closest 示例
+      document
+        .getElementById("cardContainer")
+        .addEventListener("click", function (e) {
+          const card = e.target.closest("[data-card]");
+          if (!card) return;
+
+          const cardId = card.dataset.card;
+          log(
+            "output4",
+            `点击了卡片 ${cardId}，即使点击的是内部的 <strong> 或 <p> 元素`,
+          );
+        });
+
+      // 5. 通用委托函数示例
+      delegate(
+        document.getElementById("delegateDemo"),
+        "click",
+        ".demo-btn",
+        function (e) {
+          const action = this.dataset.action;
+          log("output5", `执行操作: ${action}`);
+        },
+      );
+
+      // 添加淡出动画
+      const style = document.createElement("style");
+      style.textContent = `
+            @keyframes fadeOut {
+                from { opacity: 1; transform: translateX(0); }
+                to { opacity: 0; transform: translateX(-20px); }
+            }
+        `;
+      document.head.appendChild(style);
+    </script>
+  </body>
+</html>

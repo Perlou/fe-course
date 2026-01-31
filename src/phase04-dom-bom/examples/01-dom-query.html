@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM 查询方法</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #f5f5f5;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      h2 {
+        color: #667eea;
+        margin-top: 30px;
+        border-bottom: 2px solid #667eea;
+        padding-bottom: 8px;
+      }
+      .demo {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin: 15px 0;
+      }
+      pre {
+        background: #2d2d2d;
+        color: #f8f8f2;
+        padding: 12px;
+        border-radius: 6px;
+        overflow-x: auto;
+        font-size: 13px;
+      }
+      button {
+        padding: 8px 16px;
+        background: #667eea;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        margin: 5px;
+      }
+      button:hover {
+        background: #5a6fd6;
+      }
+      .output {
+        background: #f0f0f0;
+        padding: 15px;
+        border-radius: 6px;
+        margin-top: 10px;
+        min-height: 40px;
+        font-family: monospace;
+      }
+      .highlight {
+        background: #fff3cd;
+        padding: 2px 6px;
+        border-radius: 3px;
+      }
+      .item {
+        padding: 8px;
+        margin: 5px 0;
+        background: #e3f2fd;
+        border-radius: 4px;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+      li {
+        padding: 8px;
+        background: #f8f9fa;
+        margin: 5px 0;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🔍 DOM 查询方法</h1>
+
+    <!-- getElementById -->
+    <h2>1. getElementById()</h2>
+    <div class="demo">
+      <pre>document.getElementById('myId');</pre>
+      <div
+        id="unique-element"
+        style="
+          padding: 15px;
+          background: linear-gradient(135deg, #667eea, #764ba2);
+          color: white;
+          border-radius: 8px;
+        "
+      >
+        这是一个唯一的元素 (id="unique-element")
+      </div>
+      <button onclick="demo1()">获取元素</button>
+      <div class="output" id="output1"></div>
+    </div>
+
+    <!-- querySelector -->
+    <h2>2. querySelector() - 返回第一个匹配</h2>
+    <div class="demo">
+      <pre>
+document.querySelector('.item');       // 类选择器
+document.querySelector('#id');          // ID 选择器
+document.querySelector('div > p');      // 组合选择器
+document.querySelector('[data-type]');  // 属性选择器</pre
+      >
+      <div class="item">Item 1</div>
+      <div class="item">Item 2</div>
+      <div class="item">Item 3</div>
+      <button onclick="demo2()">获取第一个 .item</button>
+      <div class="output" id="output2"></div>
+    </div>
+
+    <!-- querySelectorAll -->
+    <h2>3. querySelectorAll() - 返回 NodeList</h2>
+    <div class="demo">
+      <pre>
+const items = document.querySelectorAll('.list-item');
+// 返回 NodeList (类数组，可以 forEach)
+items.forEach(item => console.log(item));</pre
+      >
+      <ul id="myList">
+        <li class="list-item">列表项 1</li>
+        <li class="list-item">列表项 2</li>
+        <li class="list-item">列表项 3</li>
+        <li class="list-item">列表项 4</li>
+      </ul>
+      <button onclick="demo3()">获取所有列表项</button>
+      <button onclick="demo3b()">高亮偶数项</button>
+      <div class="output" id="output3"></div>
+    </div>
+
+    <!-- getElementsByClassName / getElementsByTagName -->
+    <h2>4. getElementsByClassName / getElementsByTagName</h2>
+    <div class="demo">
+      <pre>
+document.getElementsByClassName('class'); // HTMLCollection (动态)
+document.getElementsByTagName('div');      // HTMLCollection (动态)
+
+// 注意: 返回的是 HTMLCollection，不是数组!</pre
+      >
+      <div class="box">Box 1</div>
+      <div class="box">Box 2</div>
+      <div class="box">Box 3</div>
+      <button onclick="demo4()">获取所有 .box</button>
+      <button onclick="demo4b()">添加新 Box</button>
+      <div class="output" id="output4"></div>
+    </div>
+
+    <!-- 遍历 DOM -->
+    <h2>5. 遍历 DOM 树</h2>
+    <div class="demo">
+      <pre>
+element.parentNode       // 父节点
+element.children         // 子元素 (HTMLCollection)
+element.childNodes       // 子节点 (包含文本节点)
+element.firstElementChild / lastElementChild
+element.nextElementSibling / previousElementSibling
+element.closest('.parent')  // 向上查找祖先</pre
+      >
+      <div id="parent">
+        <div id="first">第一个子元素</div>
+        <div id="middle">中间子元素</div>
+        <div id="last">最后一个子元素</div>
+      </div>
+      <button onclick="demo5()">遍历演示</button>
+      <div class="output" id="output5"></div>
+    </div>
+
+    <!-- closest -->
+    <h2>6. closest() - 向上查找</h2>
+    <div class="demo">
+      <pre>element.closest('.ancestor'); // 查找最近的祖先（包括自己）</pre>
+      <div
+        class="level-1"
+        style="padding: 20px; background: #e3f2fd; border-radius: 8px"
+      >
+        Level 1
+        <div
+          class="level-2"
+          style="
+            padding: 15px;
+            background: #bbdefb;
+            border-radius: 6px;
+            margin-top: 10px;
+          "
+        >
+          Level 2
+          <div
+            class="level-3"
+            style="
+              padding: 10px;
+              background: #90caf9;
+              border-radius: 4px;
+              margin-top: 10px;
+            "
+          >
+            <button onclick="demo6(event)">点我找祖先</button>
+          </div>
+        </div>
+      </div>
+      <div class="output" id="output6"></div>
+    </div>
+
+    <!-- matches -->
+    <h2>7. matches() - 判断元素是否匹配选择器</h2>
+    <div class="demo">
+      <pre>
+element.matches('.class');  // 返回 true/false
+// 常用于事件委托中判断目标元素</pre
+      >
+      <div class="card active" id="card1">Card 1 (active)</div>
+      <div class="card" id="card2">Card 2</div>
+      <button onclick="demo7()">检测元素</button>
+      <div class="output" id="output7"></div>
+    </div>
+
+    <script>
+      // 1. getElementById
+      function demo1() {
+        const el = document.getElementById("unique-element");
+        document.getElementById("output1").innerHTML =
+          `找到元素: <code>${el.tagName}</code>, id="${el.id}", 内容="${el.textContent.trim()}"`;
+      }
+
+      // 2. querySelector
+      function demo2() {
+        const el = document.querySelector(".item");
+        document.getElementById("output2").innerHTML =
+          `第一个 .item: "${el.textContent}"`;
+        el.style.background = "#667eea";
+        el.style.color = "white";
+      }
+
+      // 3. querySelectorAll
+      function demo3() {
+        const items = document.querySelectorAll(".list-item");
+        document.getElementById("output3").innerHTML =
+          `找到 ${items.length} 个元素 (NodeList)<br>` +
+          `类型: ${Object.prototype.toString.call(items)}`;
+      }
+
+      function demo3b() {
+        const items = document.querySelectorAll(".list-item");
+        items.forEach((item, index) => {
+          if (index % 2 === 1) {
+            item.style.background = "#667eea";
+            item.style.color = "white";
+          } else {
+            item.style.background = "#f8f9fa";
+            item.style.color = "black";
+          }
+        });
+      }
+
+      // 4. getElementsByClassName (动态集合)
+      function demo4() {
+        const boxes = document.getElementsByClassName("box");
+        document.getElementById("output4").innerHTML =
+          `找到 ${boxes.length} 个 .box 元素 (HTMLCollection - 动态集合)`;
+      }
+
+      function demo4b() {
+        const container = document.querySelector("h2:nth-of-type(4) + .demo");
+        const newBox = document.createElement("div");
+        newBox.className = "box";
+        newBox.textContent = "New Box";
+        container.insertBefore(newBox, container.querySelector("button"));
+
+        // HTMLCollection 会自动更新
+        const boxes = document.getElementsByClassName("box");
+        document.getElementById("output4").innerHTML =
+          `现在有 ${boxes.length} 个 .box 元素 (动态更新!)`;
+      }
+
+      // 5. 遍历 DOM
+      function demo5() {
+        const parent = document.getElementById("parent");
+        const middle = document.getElementById("middle");
+
+        let result = "父元素遍历:<br>";
+        result += `children.length: ${parent.children.length}<br>`;
+        result += `firstElementChild: ${parent.firstElementChild.id}<br>`;
+        result += `lastElementChild: ${parent.lastElementChild.id}<br><br>`;
+
+        result += "兄弟元素遍历:<br>";
+        result += `middle 的前一个兄弟: ${middle.previousElementSibling.id}<br>`;
+        result += `middle 的后一个兄弟: ${middle.nextElementSibling.id}`;
+
+        document.getElementById("output5").innerHTML = result;
+      }
+
+      // 6. closest
+      function demo6(event) {
+        const btn = event.target;
+        const level1 = btn.closest(".level-1");
+        const level2 = btn.closest(".level-2");
+        const level3 = btn.closest(".level-3");
+
+        document.getElementById("output6").innerHTML =
+          `从按钮向上查找:<br>` +
+          `.level-3: ${level3 ? "找到" : "未找到"}<br>` +
+          `.level-2: ${level2 ? "找到" : "未找到"}<br>` +
+          `.level-1: ${level1 ? "找到" : "未找到"}`;
+      }
+
+      // 7. matches
+      function demo7() {
+        const card1 = document.getElementById("card1");
+        const card2 = document.getElementById("card2");
+
+        document.getElementById("output7").innerHTML =
+          `card1.matches('.active'): ${card1.matches(".active")}<br>` +
+          `card2.matches('.active'): ${card2.matches(".active")}<br>` +
+          `card1.matches('.card'): ${card1.matches(".card")}`;
+      }
+    </script>
+  </body>
+</html>

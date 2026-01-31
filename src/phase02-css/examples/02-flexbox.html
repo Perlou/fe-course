@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flexbox 布局示例</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.6;
+        padding: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+      }
+
+      h1 {
+        text-align: center;
+        color: white;
+        margin-bottom: 30px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      h2 {
+        color: #333;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #667eea;
+      }
+
+      h3 {
+        color: #555;
+        margin: 15px 0 10px;
+      }
+
+      .section {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        margin-bottom: 30px;
+      }
+
+      pre {
+        background: #2d2d2d;
+        color: #f8f8f2;
+        padding: 15px;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 15px 0;
+        font-size: 14px;
+      }
+
+      /* Flex 容器样式 */
+      .flex-container {
+        display: flex;
+        background: #f0f0f0;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        min-height: 100px;
+      }
+
+      .flex-item {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 15px 25px;
+        border-radius: 6px;
+        font-weight: bold;
+        text-align: center;
+        margin: 5px;
+      }
+
+      /* Demo 控制按钮 */
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 15px 0;
+      }
+
+      .controls button {
+        padding: 8px 16px;
+        border: 2px solid #667eea;
+        background: white;
+        color: #667eea;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.3s;
+      }
+
+      .controls button:hover,
+      .controls button.active {
+        background: #667eea;
+        color: white;
+      }
+
+      /* 不同的 Flex 演示 */
+      .demo-direction-row {
+        flex-direction: row;
+      }
+      .demo-direction-row-reverse {
+        flex-direction: row-reverse;
+      }
+      .demo-direction-column {
+        flex-direction: column;
+      }
+      .demo-direction-column-reverse {
+        flex-direction: column-reverse;
+      }
+
+      .demo-justify-start {
+        justify-content: flex-start;
+      }
+      .demo-justify-end {
+        justify-content: flex-end;
+      }
+      .demo-justify-center {
+        justify-content: center;
+      }
+      .demo-justify-between {
+        justify-content: space-between;
+      }
+      .demo-justify-around {
+        justify-content: space-around;
+      }
+      .demo-justify-evenly {
+        justify-content: space-evenly;
+      }
+
+      .demo-align-stretch {
+        align-items: stretch;
+      }
+      .demo-align-start {
+        align-items: flex-start;
+      }
+      .demo-align-end {
+        align-items: flex-end;
+      }
+      .demo-align-center {
+        align-items: center;
+      }
+      .demo-align-baseline {
+        align-items: baseline;
+      }
+
+      .demo-wrap {
+        flex-wrap: wrap;
+      }
+      .demo-nowrap {
+        flex-wrap: nowrap;
+      }
+
+      /* 实战布局 */
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 15px 25px;
+        border-radius: 8px;
+        color: white;
+      }
+
+      .navbar .logo {
+        font-size: 1.5em;
+        font-weight: bold;
+      }
+
+      .navbar .nav-links {
+        display: flex;
+        gap: 20px;
+        list-style: none;
+      }
+
+      .navbar .nav-links a {
+        color: white;
+        text-decoration: none;
+        padding: 8px 15px;
+        border-radius: 6px;
+        transition: background 0.3s;
+      }
+
+      .navbar .nav-links a:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      /* 卡片布局 */
+      .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 15px 0;
+      }
+
+      .card {
+        flex: 1 1 250px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      }
+
+      .card-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+      }
+
+      .card-body {
+        padding: 20px;
+      }
+
+      /* 圣杯布局 */
+      .holy-grail {
+        display: flex;
+        flex-direction: column;
+        min-height: 300px;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .holy-grail header,
+      .holy-grail footer {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 15px;
+        text-align: center;
+      }
+
+      .holy-grail .main-content {
+        display: flex;
+        flex: 1;
+      }
+
+      .holy-grail nav,
+      .holy-grail aside {
+        background: #f0f0f0;
+        padding: 15px;
+        width: 150px;
+      }
+
+      .holy-grail main {
+        flex: 1;
+        padding: 15px;
+        background: white;
+      }
+
+      /* 居中布局 */
+      .center-demo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+        background: #f0f0f0;
+        border-radius: 8px;
+      }
+
+      .center-box {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px 50px;
+        border-radius: 12px;
+        font-size: 1.2em;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🎨 Flexbox 布局完全指南</h1>
+
+    <!-- flex-direction -->
+    <div class="section">
+      <h2>1. flex-direction（主轴方向）</h2>
+      <pre>
+display: flex;
+flex-direction: row | row-reverse | column | column-reverse;</pre
+      >
+
+      <div class="controls" id="direction-controls">
+        <button class="active" onclick="setDirection('row')">row</button>
+        <button onclick="setDirection('row-reverse')">row-reverse</button>
+        <button onclick="setDirection('column')">column</button>
+        <button onclick="setDirection('column-reverse')">column-reverse</button>
+      </div>
+
+      <div class="flex-container" id="direction-demo">
+        <div class="flex-item">1</div>
+        <div class="flex-item">2</div>
+        <div class="flex-item">3</div>
+      </div>
+    </div>
+
+    <!-- justify-content -->
+    <div class="section">
+      <h2>2. justify-content（主轴对齐）</h2>
+      <pre>
+justify-content: flex-start | flex-end | center | space-between | space-around | space-evenly;</pre
+      >
+
+      <div class="controls" id="justify-controls">
+        <button class="active" onclick="setJustify('flex-start')">
+          flex-start
+        </button>
+        <button onclick="setJustify('flex-end')">flex-end</button>
+        <button onclick="setJustify('center')">center</button>
+        <button onclick="setJustify('space-between')">space-between</button>
+        <button onclick="setJustify('space-around')">space-around</button>
+        <button onclick="setJustify('space-evenly')">space-evenly</button>
+      </div>
+
+      <div class="flex-container" id="justify-demo">
+        <div class="flex-item">A</div>
+        <div class="flex-item">B</div>
+        <div class="flex-item">C</div>
+      </div>
+    </div>
+
+    <!-- align-items -->
+    <div class="section">
+      <h2>3. align-items（交叉轴对齐）</h2>
+      <pre>
+align-items: stretch | flex-start | flex-end | center | baseline;</pre
+      >
+
+      <div class="controls" id="align-controls">
+        <button onclick="setAlign('stretch')">stretch</button>
+        <button onclick="setAlign('flex-start')">flex-start</button>
+        <button onclick="setAlign('flex-end')">flex-end</button>
+        <button class="active" onclick="setAlign('center')">center</button>
+        <button onclick="setAlign('baseline')">baseline</button>
+      </div>
+
+      <div
+        class="flex-container"
+        id="align-demo"
+        style="height: 200px; align-items: center"
+      >
+        <div class="flex-item" style="font-size: 12px; padding: 10px">小</div>
+        <div class="flex-item" style="font-size: 24px; padding: 20px">中</div>
+        <div class="flex-item" style="font-size: 36px; padding: 30px">大</div>
+      </div>
+    </div>
+
+    <!-- flex-wrap -->
+    <div class="section">
+      <h2>4. flex-wrap（换行）</h2>
+      <pre>flex-wrap: nowrap | wrap | wrap-reverse;</pre>
+
+      <div class="controls" id="wrap-controls">
+        <button onclick="setWrap('nowrap')">nowrap</button>
+        <button class="active" onclick="setWrap('wrap')">wrap</button>
+      </div>
+
+      <div class="flex-container" id="wrap-demo" style="flex-wrap: wrap">
+        <div class="flex-item" style="min-width: 150px">Item 1</div>
+        <div class="flex-item" style="min-width: 150px">Item 2</div>
+        <div class="flex-item" style="min-width: 150px">Item 3</div>
+        <div class="flex-item" style="min-width: 150px">Item 4</div>
+        <div class="flex-item" style="min-width: 150px">Item 5</div>
+      </div>
+    </div>
+
+    <!-- 实战：导航栏 -->
+    <div class="section">
+      <h2>5. 实战：响应式导航栏</h2>
+      <pre>
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}</pre
+      >
+
+      <nav class="navbar">
+        <div class="logo">🚀 MyBrand</div>
+        <ul class="nav-links">
+          <li><a href="#">首页</a></li>
+          <li><a href="#">产品</a></li>
+          <li><a href="#">关于</a></li>
+          <li><a href="#">联系</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- 实战：卡片布局 -->
+    <div class="section">
+      <h2>6. 实战：响应式卡片布局</h2>
+      <pre>
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.card {
+    flex: 1 1 250px; /* 伸缩 + 最小宽度 */
+}</pre
+      >
+
+      <div class="card-container">
+        <div class="card">
+          <div class="card-header"><h3>卡片 1</h3></div>
+          <div class="card-body">flex: 1 1 250px 让卡片可以自适应缩放</div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h3>卡片 2</h3></div>
+          <div class="card-body">调整窗口宽度，观察卡片的响应式效果</div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h3>卡片 3</h3></div>
+          <div class="card-body">gap: 20px 设置卡片之间的间距</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 实战：圣杯布局 -->
+    <div class="section">
+      <h2>7. 实战：圣杯布局</h2>
+      <pre>
+.holy-grail { display: flex; flex-direction: column; }
+.main-content { display: flex; flex: 1; }
+.main-content main { flex: 1; }</pre
+      >
+
+      <div class="holy-grail">
+        <header>Header</header>
+        <div class="main-content">
+          <nav>Sidebar 1</nav>
+          <main>Main Content - 这是主要内容区域，会自动填充剩余空间</main>
+          <aside>Sidebar 2</aside>
+        </div>
+        <footer>Footer</footer>
+      </div>
+    </div>
+
+    <!-- 实战：完美居中 -->
+    <div class="section">
+      <h2>8. 实战：完美居中</h2>
+      <pre>
+.center-demo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}</pre
+      >
+
+      <div class="center-demo">
+        <div class="center-box">完美居中 ✨</div>
+      </div>
+    </div>
+
+    <script>
+      function setDirection(direction) {
+        document.getElementById("direction-demo").style.flexDirection =
+          direction;
+        updateControls("direction-controls", direction);
+      }
+
+      function setJustify(justify) {
+        document.getElementById("justify-demo").style.justifyContent = justify;
+        updateControls("justify-controls", justify);
+      }
+
+      function setAlign(align) {
+        document.getElementById("align-demo").style.alignItems = align;
+        updateControls("align-controls", align);
+      }
+
+      function setWrap(wrap) {
+        document.getElementById("wrap-demo").style.flexWrap = wrap;
+        updateControls("wrap-controls", wrap);
+      }
+
+      function updateControls(containerId, value) {
+        const buttons = document.querySelectorAll(`#${containerId} button`);
+        buttons.forEach((btn) => {
+          btn.classList.toggle("active", btn.textContent === value);
+        });
+      }
+    </script>
+  </body>
+</html>

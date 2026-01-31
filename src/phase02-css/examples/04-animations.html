@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS 动画与过渡</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, sans-serif;
+        padding: 20px;
+        background: #1a1a2e;
+        color: #eee;
+        min-height: 100vh;
+      }
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #667eea;
+      }
+      h2 {
+        color: #667eea;
+        margin: 25px 0 15px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #667eea;
+      }
+      .section {
+        background: #16213e;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+      }
+      pre {
+        background: #0f0f1a;
+        color: #a5d6ff;
+        padding: 12px;
+        border-radius: 6px;
+        margin: 10px 0;
+        overflow-x: auto;
+        font-size: 13px;
+      }
+      .demo {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      /* 过渡示例 */
+      .box {
+        width: 100px;
+        height: 100px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .transition-basic {
+        background: #667eea;
+        transition: all 0.3s ease;
+      }
+      .transition-basic:hover {
+        background: #764ba2;
+        transform: scale(1.2);
+      }
+
+      .transition-multi {
+        background: #00b894;
+        transition:
+          transform 0.3s,
+          background 0.5s,
+          border-radius 0.3s;
+      }
+      .transition-multi:hover {
+        transform: rotate(45deg);
+        background: #fdcb6e;
+        border-radius: 50%;
+      }
+
+      .transition-delay {
+        background: #e17055;
+        transition: transform 0.3s ease 0.2s;
+      }
+      .transition-delay:hover {
+        transform: translateY(-20px);
+      }
+
+      /* 动画示例 */
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+      }
+      .anim-pulse {
+        background: #667eea;
+        animation: pulse 1.5s ease-in-out infinite;
+      }
+
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .anim-spin {
+        background: #00cec9;
+        animation: spin 2s linear infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-30px);
+        }
+      }
+      .anim-bounce {
+        background: #fdcb6e;
+        animation: bounce 0.8s ease infinite;
+      }
+
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-10px);
+        }
+        75% {
+          transform: translateX(10px);
+        }
+      }
+      .anim-shake {
+        background: #e17055;
+        animation: shake 0.5s ease infinite;
+      }
+
+      @keyframes gradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      .anim-gradient {
+        background: linear-gradient(270deg, #667eea, #764ba2, #f093fb, #f5576c);
+        background-size: 400% 400%;
+        animation: gradient 3s ease infinite;
+      }
+
+      /* 加载动画 */
+      .loader {
+        width: 50px;
+        height: 50px;
+        border: 4px solid #333;
+        border-top-color: #667eea;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      .dots {
+        display: flex;
+        gap: 8px;
+      }
+      .dots span {
+        width: 12px;
+        height: 12px;
+        background: #667eea;
+        border-radius: 50%;
+        animation: bounce 1s ease infinite;
+      }
+      .dots span:nth-child(2) {
+        animation-delay: 0.1s;
+      }
+      .dots span:nth-child(3) {
+        animation-delay: 0.2s;
+      }
+
+      /* 悬停卡片 */
+      .card {
+        width: 200px;
+        height: 150px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+      .card:hover {
+        transform: translateY(-15px) rotateX(10deg);
+        box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
+      }
+
+      /* 按钮效果 */
+      .btn {
+        padding: 12px 30px;
+        background: #667eea;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s;
+      }
+      .btn:hover {
+        background: #5a6fd6;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+      }
+      .btn::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition:
+          width 0.3s,
+          height 0.3s;
+      }
+      .btn:active::after {
+        width: 300px;
+        height: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>✨ CSS 动画与过渡</h1>
+
+    <div class="section">
+      <h2>1. Transition 过渡效果</h2>
+      <pre>
+transition: property duration timing-function delay;
+transition: all 0.3s ease;
+transition: transform 0.3s, opacity 0.5s;</pre
+      >
+      <div class="demo">
+        <div class="box transition-basic">基础</div>
+        <div class="box transition-multi">多属性</div>
+        <div class="box transition-delay">延迟</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>2. @keyframes 关键帧动画</h2>
+      <pre>
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+.element { animation: pulse 1.5s ease-in-out infinite; }</pre
+      >
+      <div class="demo">
+        <div class="box anim-pulse">脉冲</div>
+        <div class="box anim-spin">旋转</div>
+        <div class="box anim-bounce">弹跳</div>
+        <div class="box anim-shake">抖动</div>
+        <div class="box anim-gradient">渐变</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>3. 加载动画</h2>
+      <div class="demo">
+        <div class="loader"></div>
+        <div class="dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>4. 悬停效果</h2>
+      <pre>
+.card:hover {
+    transform: translateY(-15px) rotateX(10deg);
+    box-shadow: 0 20px 40px rgba(...);
+}</pre
+      >
+      <div class="demo">
+        <div class="card">悬停卡片</div>
+        <button class="btn">波纹按钮</button>
+      </div>
+    </div>
+  </body>
+</html>

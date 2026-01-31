@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>事件基础</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #f5f5f5;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      h2 {
+        color: #667eea;
+        margin-top: 30px;
+        border-bottom: 2px solid #667eea;
+        padding-bottom: 8px;
+      }
+      .demo {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin: 15px 0;
+      }
+      pre {
+        background: #2d2d2d;
+        color: #f8f8f2;
+        padding: 12px;
+        border-radius: 6px;
+        overflow-x: auto;
+        font-size: 13px;
+      }
+      button {
+        padding: 8px 16px;
+        background: #667eea;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        margin: 5px;
+      }
+      button:hover {
+        background: #5a6fd6;
+      }
+      .output {
+        background: #f0f0f0;
+        padding: 15px;
+        border-radius: 6px;
+        margin-top: 10px;
+        min-height: 40px;
+        font-family: monospace;
+        max-height: 200px;
+        overflow-y: auto;
+      }
+      .box {
+        padding: 20px;
+        margin: 10px;
+        border-radius: 8px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .outer {
+        background: #e3f2fd;
+      }
+      .middle {
+        background: #bbdefb;
+      }
+      .inner {
+        background: #90caf9;
+      }
+      .event-area {
+        width: 100%;
+        height: 150px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 18px;
+        cursor: crosshair;
+      }
+      input {
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        width: 100%;
+        margin: 5px 0;
+      }
+      input:focus {
+        border-color: #667eea;
+        outline: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>⚡ 事件基础</h1>
+
+    <!-- 事件绑定方式 -->
+    <h2>1. 事件绑定方式</h2>
+    <div class="demo">
+      <pre>
+// 方式1: HTML 属性 (不推荐)
+&lt;button onclick="handler()"&gt;点击&lt;/button&gt;
+
+// 方式2: DOM 属性
+element.onclick = function(e) { };
+
+// 方式3: addEventListener (推荐)
+element.addEventListener('click', handler);
+element.addEventListener('click', handler, { once: true }); // 只触发一次
+element.removeEventListener('click', handler);</pre
+      >
+      <button onclick="log1('HTML 属性方式')">HTML 属性</button>
+      <button id="btn-dom">DOM 属性</button>
+      <button id="btn-listener">addEventListener</button>
+      <button id="btn-once">只触发一次</button>
+      <div class="output" id="output1"></div>
+    </div>
+
+    <!-- 事件对象 -->
+    <h2>2. 事件对象 (Event Object)</h2>
+    <div class="demo">
+      <pre>
+element.addEventListener('click', function(event) {
+    event.type;           // 事件类型
+    event.target;         // 触发事件的元素
+    event.currentTarget;  // 绑定事件的元素
+    event.preventDefault();    // 阻止默认行为
+    event.stopPropagation();   // 阻止冒泡
+});</pre
+      >
+      <div class="event-area" id="eventArea">点击这里查看事件对象</div>
+      <div class="output" id="output2"></div>
+    </div>
+
+    <!-- 事件流 -->
+    <h2>3. 事件流 (捕获 → 目标 → 冒泡)</h2>
+    <div class="demo">
+      <pre>
+// 第三个参数 true = 捕获阶段触发
+element.addEventListener('click', handler, true);
+
+// 默认在冒泡阶段触发
+element.addEventListener('click', handler);
+element.addEventListener('click', handler, false);</pre
+      >
+      <div class="box outer" id="outer">
+        外层 (outer)
+        <div class="box middle" id="middle">
+          中层 (middle)
+          <div class="box inner" id="inner">内层 (inner) - 点击这里</div>
+        </div>
+      </div>
+      <button onclick="clearOutput('output3')">清空日志</button>
+      <label style="margin-left: 15px">
+        <input type="checkbox" id="captureMode" /> 启用捕获模式
+      </label>
+      <div class="output" id="output3"></div>
+    </div>
+
+    <!-- 阻止冒泡和默认行为 -->
+    <h2>4. 阻止冒泡和默认行为</h2>
+    <div class="demo">
+      <pre>
+event.stopPropagation();       // 阻止冒泡
+event.preventDefault();         // 阻止默认行为
+event.stopImmediatePropagation(); // 阻止同元素的其他监听器</pre
+      >
+      <div
+        id="bubble-container"
+        style="padding: 20px; background: #e3f2fd; border-radius: 8px"
+      >
+        容器 (点击会冒泡到这里)
+        <button id="stop-bubble" style="margin: 10px">阻止冒泡的按钮</button>
+        <button id="normal-bubble" style="margin: 10px">正常冒泡的按钮</button>
+      </div>
+      <br />
+      <a href="https://google.com" id="prevent-link"
+        >阻止默认行为的链接（不会跳转）</a
+      >
+      <div class="output" id="output4"></div>
+    </div>
+
+    <!-- 常用事件类型 -->
+    <h2>5. 常用事件类型</h2>
+    <div class="demo">
+      <pre>
+// 鼠标事件
+click, dblclick, mousedown, mouseup, mousemove
+mouseenter, mouseleave, mouseover, mouseout
+
+// 键盘事件
+keydown, keyup, keypress
+
+// 表单事件
+submit, input, change, focus, blur
+
+// 窗口事件
+load, resize, scroll, unload</pre
+      >
+      <input type="text" id="eventInput" placeholder="在这里输入文字..." />
+      <div class="output" id="output5"></div>
+    </div>
+
+    <!-- 键盘事件详解 -->
+    <h2>6. 键盘事件</h2>
+    <div class="demo">
+      <pre>
+event.key;      // 按键值 ('a', 'Enter', 'ArrowUp')
+event.code;     // 按键代码 ('KeyA', 'Enter', 'ArrowUp')
+event.ctrlKey;  // 是否按下 Ctrl
+event.shiftKey; // 是否按下 Shift
+event.altKey;   // 是否按下 Alt
+event.metaKey;  // 是否按下 Meta (Mac: Cmd, Win: Win键)</pre
+      >
+      <input type="text" id="keyboardInput" placeholder="按下键盘..." />
+      <div class="output" id="output6"></div>
+    </div>
+
+    <!-- 鼠标位置 -->
+    <h2>7. 鼠标位置</h2>
+    <div class="demo">
+      <pre>
+event.clientX/Y;  // 相对于视口
+event.pageX/Y;    // 相对于文档
+event.offsetX/Y;  // 相对于目标元素
+event.screenX/Y;  // 相对于屏幕</pre
+      >
+      <div class="event-area" id="mouseArea">移动鼠标</div>
+      <div class="output" id="output7"></div>
+    </div>
+
+    <script>
+      // 工具函数
+      function log(outputId, message) {
+        const output = document.getElementById(outputId);
+        output.innerHTML = message + "<br>" + output.innerHTML;
+      }
+      function clearOutput(id) {
+        document.getElementById(id).innerHTML = "";
+      }
+
+      // 1. 事件绑定方式
+      function log1(msg) {
+        log("output1", msg);
+      }
+
+      document.getElementById("btn-dom").onclick = function () {
+        log("output1", "DOM 属性方式");
+      };
+
+      document
+        .getElementById("btn-listener")
+        .addEventListener("click", function () {
+          log("output1", "addEventListener 方式");
+        });
+
+      document.getElementById("btn-once").addEventListener(
+        "click",
+        function () {
+          log("output1", "这个按钮只会触发一次！");
+        },
+        { once: true },
+      );
+
+      // 2. 事件对象
+      document
+        .getElementById("eventArea")
+        .addEventListener("click", function (e) {
+          document.getElementById("output2").innerHTML = `
+                type: ${e.type}<br>
+                target: ${e.target.id}<br>
+                currentTarget: ${e.currentTarget.id}<br>
+                clientX/Y: ${e.clientX}, ${e.clientY}<br>
+                offsetX/Y: ${e.offsetX}, ${e.offsetY}
+            `;
+        });
+
+      // 3. 事件流
+      function setupEventFlow() {
+        ["outer", "middle", "inner"].forEach((id) => {
+          const el = document.getElementById(id);
+
+          // 捕获阶段
+          el.addEventListener(
+            "click",
+            function (e) {
+              log("output3", `捕获: ${id}`);
+            },
+            true,
+          );
+
+          // 冒泡阶段
+          el.addEventListener(
+            "click",
+            function (e) {
+              log("output3", `冒泡: ${id}`);
+            },
+            false,
+          );
+        });
+      }
+      setupEventFlow();
+
+      // 4. 阻止冒泡和默认行为
+      document
+        .getElementById("bubble-container")
+        .addEventListener("click", function () {
+          log("output4", "容器收到点击事件");
+        });
+
+      document
+        .getElementById("stop-bubble")
+        .addEventListener("click", function (e) {
+          e.stopPropagation();
+          log("output4", "阻止冒泡的按钮被点击");
+        });
+
+      document
+        .getElementById("normal-bubble")
+        .addEventListener("click", function () {
+          log("output4", "正常按钮被点击");
+        });
+
+      document
+        .getElementById("prevent-link")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          log("output4", "链接被点击，但跳转被阻止");
+        });
+
+      // 5. 常用事件
+      const eventInput = document.getElementById("eventInput");
+
+      eventInput.addEventListener("input", function (e) {
+        log("output5", `input: "${e.target.value}"`);
+      });
+
+      eventInput.addEventListener("focus", function () {
+        log("output5", "focus: 获得焦点");
+      });
+
+      eventInput.addEventListener("blur", function () {
+        log("output5", "blur: 失去焦点");
+      });
+
+      // 6. 键盘事件
+      document
+        .getElementById("keyboardInput")
+        .addEventListener("keydown", function (e) {
+          const modifiers = [
+            e.ctrlKey && "Ctrl",
+            e.shiftKey && "Shift",
+            e.altKey && "Alt",
+            e.metaKey && "Meta",
+          ]
+            .filter(Boolean)
+            .join(" + ");
+
+          document.getElementById("output6").innerHTML = `
+                key: ${e.key}<br>
+                code: ${e.code}<br>
+                修饰键: ${modifiers || "无"}
+            `;
+        });
+
+      // 7. 鼠标位置
+      document
+        .getElementById("mouseArea")
+        .addEventListener("mousemove", function (e) {
+          document.getElementById("output7").innerHTML = `
+                client: (${e.clientX}, ${e.clientY})<br>
+                page: (${e.pageX}, ${e.pageY})<br>
+                offset: (${e.offsetX}, ${e.offsetY})<br>
+                screen: (${e.screenX}, ${e.screenY})
+            `;
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM 操作方法</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #f5f5f5;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      h2 {
+        color: #667eea;
+        margin-top: 30px;
+        border-bottom: 2px solid #667eea;
+        padding-bottom: 8px;
+      }
+      .demo {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin: 15px 0;
+      }
+      pre {
+        background: #2d2d2d;
+        color: #f8f8f2;
+        padding: 12px;
+        border-radius: 6px;
+        overflow-x: auto;
+        font-size: 13px;
+      }
+      button {
+        padding: 8px 16px;
+        background: #667eea;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        margin: 5px;
+      }
+      button:hover {
+        background: #5a6fd6;
+      }
+      .output {
+        background: #f0f0f0;
+        padding: 15px;
+        border-radius: 6px;
+        margin-top: 10px;
+        min-height: 60px;
+      }
+      .card {
+        padding: 15px;
+        margin: 5px 0;
+        background: #e3f2fd;
+        border-radius: 6px;
+      }
+      input {
+        padding: 8px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        margin: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>✏️ DOM 操作方法</h1>
+
+    <!-- 创建元素 -->
+    <h2>1. 创建元素</h2>
+    <div class="demo">
+      <pre>
+const div = document.createElement('div');
+const text = document.createTextNode('文本');
+const fragment = document.createDocumentFragment();</pre
+      >
+      <div id="container1" class="output"></div>
+      <button onclick="demo1a()">创建单个元素</button>
+      <button onclick="demo1b()">使用 Fragment 批量创建</button>
+      <button onclick="demo1c()">清空</button>
+    </div>
+
+    <!-- 插入元素 -->
+    <h2>2. 插入元素</h2>
+    <div class="demo">
+      <pre>
+parent.appendChild(child);          // 末尾添加
+parent.insertBefore(new, ref);      // 在参考元素前插入
+parent.append(...nodes);            // 末尾添加多个 (支持字符串)
+parent.prepend(...nodes);           // 开头添加多个
+element.before(...nodes);           // 元素前添加
+element.after(...nodes);            // 元素后添加</pre
+      >
+      <div id="container2" class="output">
+        <div class="card" id="ref">参考元素</div>
+      </div>
+      <button onclick="demo2a()">appendChild</button>
+      <button onclick="demo2b()">insertBefore</button>
+      <button onclick="demo2c()">prepend</button>
+      <button onclick="demo2d()">重置</button>
+    </div>
+
+    <!-- 替换和删除 -->
+    <h2>3. 替换和删除</h2>
+    <div class="demo">
+      <pre>
+parent.replaceChild(new, old);  // 替换子元素
+element.replaceWith(...nodes);   // 替换自己
+element.remove();                // 删除自己
+parent.removeChild(child);       // 删除子元素</pre
+      >
+      <div id="container3" class="output">
+        <div class="card" id="toReplace">待替换元素</div>
+        <div class="card" id="toRemove">待删除元素</div>
+      </div>
+      <button onclick="demo3a()">替换第一个</button>
+      <button onclick="demo3b()">删除第二个</button>
+      <button onclick="demo3c()">重置</button>
+    </div>
+
+    <!-- 克隆元素 -->
+    <h2>4. 克隆元素</h2>
+    <div class="demo">
+      <pre>
+element.cloneNode(false);  // 浅克隆 (只克隆元素本身)
+element.cloneNode(true);   // 深克隆 (包含所有子节点)</pre
+      >
+      <div id="original" class="card">
+        <strong>原始元素</strong>
+        <p>包含子元素</p>
+      </div>
+      <div id="container4" class="output"></div>
+      <button onclick="demo4a()">浅克隆</button>
+      <button onclick="demo4b()">深克隆</button>
+      <button onclick="demo4c()">清空克隆</button>
+    </div>
+
+    <!-- 修改内容 -->
+    <h2>5. 修改内容</h2>
+    <div class="demo">
+      <pre>
+element.textContent = '纯文本';        // 设置纯文本
+element.innerHTML = '&lt;b&gt;HTML&lt;/b&gt;';     // 设置 HTML (有 XSS 风险)
+element.innerText = '可见文本';         // 设置可见文本</pre
+      >
+      <div id="content-demo" class="card">原始内容</div>
+      <input
+        type="text"
+        id="contentInput"
+        placeholder="输入新内容"
+        value="<b>加粗</b><i>斜体</i>"
+      />
+      <button onclick="demo5a()">textContent</button>
+      <button onclick="demo5b()">innerHTML</button>
+      <button onclick="demo5c()">innerText</button>
+    </div>
+
+    <!-- 修改属性 -->
+    <h2>6. 修改属性</h2>
+    <div class="demo">
+      <pre>
+element.getAttribute('href');
+element.setAttribute('src', 'image.jpg');
+element.removeAttribute('disabled');
+element.hasAttribute('required');
+
+// 直接访问属性
+element.id = 'newId';
+element.className = 'class1 class2';
+element.dataset.userId = '123';  // data-user-id="123"</pre
+      >
+      <div id="attr-demo" class="card" data-info="原始数据">属性操作示例</div>
+      <button onclick="demo6a()">读取属性</button>
+      <button onclick="demo6b()">修改 data-info</button>
+      <button onclick="demo6c()">添加 data-new</button>
+    </div>
+
+    <!-- 修改样式 -->
+    <h2>7. 修改样式</h2>
+    <div class="demo">
+      <pre>
+// 内联样式
+element.style.backgroundColor = 'red';
+element.style.cssText = 'color: red; font-size: 20px;';
+
+// 类操作
+element.classList.add('active', 'highlight');
+element.classList.remove('active');
+element.classList.toggle('visible');
+element.classList.contains('active');
+element.classList.replace('old', 'new');</pre
+      >
+      <div id="style-demo" class="card">样式操作示例</div>
+      <button onclick="demo7a()">修改内联样式</button>
+      <button onclick="demo7b()">toggle 高亮</button>
+      <button onclick="demo7c()">重置样式</button>
+    </div>
+
+    <!-- insertAdjacentHTML -->
+    <h2>8. insertAdjacentHTML / insertAdjacentElement</h2>
+    <div class="demo">
+      <pre>
+element.insertAdjacentHTML(position, html);
+// position: 'beforebegin' | 'afterbegin' | 'beforeend' | 'afterend'
+
+/*
+&lt;!-- beforebegin --&gt;
+&lt;div id="element"&gt;
+  &lt;!-- afterbegin --&gt;
+  内容
+  &lt;!-- beforeend --&gt;
+&lt;/div&gt;
+&lt;!-- afterend --&gt;
+*/</pre
+      >
+      <div class="output">
+        <div id="adjacent-demo" class="card">目标元素</div>
+      </div>
+      <button onclick="demo8('beforebegin')">beforebegin</button>
+      <button onclick="demo8('afterbegin')">afterbegin</button>
+      <button onclick="demo8('beforeend')">beforeend</button>
+      <button onclick="demo8('afterend')">afterend</button>
+      <button onclick="demo8reset()">重置</button>
+    </div>
+
+    <script>
+      let counter = 0;
+
+      // 1. 创建元素
+      function demo1a() {
+        const container = document.getElementById("container1");
+        const div = document.createElement("div");
+        div.className = "card";
+        div.textContent = `新元素 ${++counter}`;
+        container.appendChild(div);
+      }
+
+      function demo1b() {
+        const container = document.getElementById("container1");
+        const fragment = document.createDocumentFragment();
+
+        for (let i = 0; i < 5; i++) {
+          const div = document.createElement("div");
+          div.className = "card";
+          div.textContent = `批量元素 ${++counter}`;
+          fragment.appendChild(div);
+        }
+
+        container.appendChild(fragment); // 一次性插入，性能更好
+      }
+
+      function demo1c() {
+        document.getElementById("container1").innerHTML = "";
+        counter = 0;
+      }
+
+      // 2. 插入元素
+      function demo2a() {
+        const container = document.getElementById("container2");
+        const div = document.createElement("div");
+        div.className = "card";
+        div.textContent = "appendChild 添加";
+        div.style.background = "#c8e6c9";
+        container.appendChild(div);
+      }
+
+      function demo2b() {
+        const container = document.getElementById("container2");
+        const ref = document.getElementById("ref");
+        const div = document.createElement("div");
+        div.className = "card";
+        div.textContent = "insertBefore 添加";
+        div.style.background = "#fff3cd";
+        container.insertBefore(div, ref);
+      }
+
+      function demo2c() {
+        const container = document.getElementById("container2");
+        const div = document.createElement("div");
+        div.className = "card";
+        div.textContent = "prepend 添加";
+        div.style.background = "#bbdefb";
+        container.prepend(div);
+      }
+
+      function demo2d() {
+        document.getElementById("container2").innerHTML =
+          '<div class="card" id="ref">参考元素</div>';
+      }
+
+      // 3. 替换和删除
+      function demo3a() {
+        const old = document.getElementById("toReplace");
+        if (old) {
+          const newEl = document.createElement("div");
+          newEl.className = "card";
+          newEl.id = "replaced";
+          newEl.textContent = "已替换的新元素";
+          newEl.style.background = "#c8e6c9";
+          old.replaceWith(newEl);
+        }
+      }
+
+      function demo3b() {
+        const el = document.getElementById("toRemove");
+        if (el) el.remove();
+      }
+
+      function demo3c() {
+        document.getElementById("container3").innerHTML = `
+                <div class="card" id="toReplace">待替换元素</div>
+                <div class="card" id="toRemove">待删除元素</div>`;
+      }
+
+      // 4. 克隆
+      function demo4a() {
+        const original = document.getElementById("original");
+        const clone = original.cloneNode(false);
+        clone.textContent = "浅克隆 (无子节点)";
+        clone.style.background = "#fff3cd";
+        document.getElementById("container4").appendChild(clone);
+      }
+
+      function demo4b() {
+        const original = document.getElementById("original");
+        const clone = original.cloneNode(true);
+        clone.style.background = "#c8e6c9";
+        clone.querySelector("strong").textContent = "深克隆";
+        document.getElementById("container4").appendChild(clone);
+      }
+
+      function demo4c() {
+        document.getElementById("container4").innerHTML = "";
+      }
+
+      // 5. 修改内容
+      function demo5a() {
+        const value = document.getElementById("contentInput").value;
+        document.getElementById("content-demo").textContent = value;
+      }
+
+      function demo5b() {
+        const value = document.getElementById("contentInput").value;
+        document.getElementById("content-demo").innerHTML = value;
+      }
+
+      function demo5c() {
+        const value = document.getElementById("contentInput").value;
+        document.getElementById("content-demo").innerText = value;
+      }
+
+      // 6. 属性操作
+      function demo6a() {
+        const el = document.getElementById("attr-demo");
+        alert(
+          `id: ${el.id}\ndata-info: ${el.dataset.info}\nclass: ${el.className}`,
+        );
+      }
+
+      function demo6b() {
+        const el = document.getElementById("attr-demo");
+        el.dataset.info = "已修改 " + new Date().toLocaleTimeString();
+        el.textContent = "data-info: " + el.dataset.info;
+      }
+
+      function demo6c() {
+        const el = document.getElementById("attr-demo");
+        el.dataset.newAttr = "hello";
+        el.textContent = "data-new-attr: " + el.dataset.newAttr;
+      }
+
+      // 7. 样式操作
+      function demo7a() {
+        const el = document.getElementById("style-demo");
+        el.style.background = "linear-gradient(135deg, #667eea, #764ba2)";
+        el.style.color = "white";
+        el.style.padding = "20px";
+        el.style.borderRadius = "12px";
+      }
+
+      function demo7b() {
+        const el = document.getElementById("style-demo");
+        el.classList.toggle("highlight");
+        if (el.classList.contains("highlight")) {
+          el.style.boxShadow = "0 0 20px rgba(102, 126, 234, 0.5)";
+          el.style.transform = "scale(1.02)";
+        } else {
+          el.style.boxShadow = "";
+          el.style.transform = "";
+        }
+      }
+
+      function demo7c() {
+        const el = document.getElementById("style-demo");
+        el.style.cssText = "";
+        el.className = "card";
+        el.textContent = "样式操作示例";
+      }
+
+      // 8. insertAdjacentHTML
+      function demo8(position) {
+        const el = document.getElementById("adjacent-demo");
+        el.insertAdjacentHTML(
+          position,
+          `<div class="card" style="background:#c8e6c9">${position}</div>`,
+        );
+      }
+
+      function demo8reset() {
+        const parent = document.querySelector(
+          "h2:last-of-type + .demo .output",
+        );
+        parent.innerHTML =
+          '<div id="adjacent-demo" class="card">目标元素</div>';
+      }
+    </script>
+  </body>
+</html>
