@@ -1,0 +1,123 @@
+{
+  "// 说明": "npm scripts 配置详解",
+  "// 运行": "将此文件内容合并到你项目的 package.json 中",
+
+  "// ========== 1. 基础 scripts ==========": "",
+  "scripts": {
+    "// === 开发 ===": "",
+    "dev": "vite --host --open",
+    "dev:debug": "NODE_OPTIONS='--inspect' vite",
+
+    "// === 构建 ===": "",
+    "build": "run-s clean type-check build:vite",
+    "build:vite": "vite build",
+    "build:analyze": "ANALYZE=true vite build",
+    "preview": "vite preview --port 4173",
+
+    "// === 代码质量 ===": "",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0",
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,json,md}'",
+    "format:check": "prettier --check 'src/**/*.{js,jsx,ts,tsx,css,json,md}'",
+    "type-check": "tsc --noEmit",
+
+    "// === 测试 ===": "",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui",
+
+    "// === Git Hooks ===": "",
+    "prepare": "husky install",
+    "precommit": "lint-staged",
+    "commitlint": "commitlint --edit",
+
+    "// === 工具 ===": "",
+    "clean": "rimraf dist .cache coverage",
+    "deps:check": "npx npm-check-updates",
+    "deps:update": "npx npm-check-updates -u && pnpm install",
+    "size": "size-limit",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
+  },
+
+  "// ========== 2. scripts 执行顺序说明 ==========": {
+    "串行执行 (&&)": "npm run clean && npm run build",
+    "并行执行 (&)": "npm run dev & npm run watch",
+    "npm-run-all 串行 (run-s)": "run-s clean lint build",
+    "npm-run-all 并行 (run-p)": "run-p dev:* watch:*",
+    "通配符匹配": "run-p test:*"
+  },
+
+  "// ========== 3. 生命周期钩子 ==========": {
+    "说明": [
+      "pre<script>  → 在 script 之前自动执行",
+      "post<script> → 在 script 之后自动执行",
+      "prepare      → npm install 之后自动执行",
+      "prepublishOnly → npm publish 之前执行",
+      "prepack / postpack → pack 前后"
+    ],
+    "示例": {
+      "prebuild": "echo '构建开始...'",
+      "build": "vite build",
+      "postbuild": "echo '构建完成!'"
+    }
+  },
+
+  "// ========== 4. 环境变量 ==========": {
+    "说明": ["cross-env: 跨平台设置环境变量", "dotenv: 从 .env 文件加载"],
+    "示例": {
+      "dev:staging": "cross-env NODE_ENV=staging vite",
+      "build:prod": "cross-env NODE_ENV=production vite build"
+    }
+  },
+
+  "// ========== 5. 常用脚本模式 ==========": {},
+
+  "// 5.1 lint-staged (只检查暂存文件)": {
+    "lint-staged": {
+      "*.{js,jsx,ts,tsx}": ["eslint --fix", "prettier --write"],
+      "*.{css,scss}": ["prettier --write"],
+      "*.{json,md}": ["prettier --write"]
+    }
+  },
+
+  "// 5.2 size-limit (包体积监控)": {
+    "size-limit": [
+      { "path": "dist/**/*.js", "limit": "50 kB" },
+      { "path": "dist/**/*.css", "limit": "10 kB" }
+    ]
+  },
+
+  "// 5.3 engines (要求 Node 版本)": {
+    "engines": {
+      "node": ">=18.0.0",
+      "pnpm": ">=8.0.0"
+    }
+  },
+
+  "// ========== 6. 完整 package.json 模板 ==========": {
+    "name": "my-project",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+      "dev": "vite --open",
+      "build": "tsc && vite build",
+      "preview": "vite preview",
+      "lint": "eslint . --fix",
+      "format": "prettier --write .",
+      "test": "vitest",
+      "prepare": "husky install"
+    },
+    "dependencies": {},
+    "devDependencies": {
+      "typescript": "^5.0.0",
+      "vite": "^5.0.0",
+      "eslint": "^8.0.0",
+      "prettier": "^3.0.0",
+      "husky": "^9.0.0",
+      "lint-staged": "^15.0.0",
+      "vitest": "^1.0.0"
+    }
+  }
+}
