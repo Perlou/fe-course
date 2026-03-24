@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C /Users/perlou/Desktop/personal/fe-course status)",
+      "Bash(ls -d /Users/perlou/Desktop/personal/fe-course/src/phase*/)"
+    ]
+  }
+}
