@@ -1,0 +1,6 @@
+{
+  "name": "@micro/framework",
+  "version": "1.0.0",
+  "description": "微前端容器框架核心",
+  "main": "src/index.js"
+}

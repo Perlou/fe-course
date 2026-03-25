@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/sub-apps/vue/style.css">
+</head>
+<body>
+  <div id="vue-root">
+    <div class="settings-app">
+      <div class="settings-header">
+        <h2>⚙️ 设置中心</h2>
+        <span class="sub-app-badge vue">Vue Sub-App</span>
+      </div>
+
+      <div class="settings-layout">
+        <!-- 侧边导航 -->
+        <aside class="settings-sidebar">
+          <nav class="sidebar-nav">
+            <a class="sidebar-item active" data-section="profile">
+              <span class="sidebar-icon">👤</span>
+              个人资料
+            </a>
+            <a class="sidebar-item" data-section="appearance">
+              <span class="sidebar-icon">🎨</span>
+              外观设置
+            </a>
+            <a class="sidebar-item" data-section="notifications">
+              <span class="sidebar-icon">🔔</span>
+              通知偏好
+            </a>
+            <a class="sidebar-item" data-section="security">
+              <span class="sidebar-icon">🔒</span>
+              安全设置
+            </a>
+            <a class="sidebar-item" data-section="about">
+              <span class="sidebar-icon">ℹ️</span>
+              关于系统
+            </a>
+          </nav>
+        </aside>
+
+        <!-- 设置内容 -->
+        <main class="settings-content">
+          <!-- 个人资料 -->
+          <section id="section-profile" class="settings-section active">
+            <h3>个人资料</h3>
+            <div class="form-group">
+              <label>用户名</label>
+              <input type="text" id="input-username" value="Alice" class="form-input">
+            </div>
+            <div class="form-group">
+              <label>邮箱</label>
+              <input type="email" id="input-email" value="alice@example.com" class="form-input">
+            </div>
+            <div class="form-group">
+              <label>角色</label>
+              <input type="text" id="input-role" value="管理员" class="form-input" disabled>
+            </div>
+            <button class="btn-primary" id="save-profile">保存修改</button>
+          </section>
+
+          <!-- 外观设置 -->
+          <section id="section-appearance" class="settings-section">
+            <h3>外观设置</h3>
+            <div class="form-group">
+              <label>主题模式</label>
+              <div class="toggle-group">
+                <button class="toggle-btn active" id="theme-dark" data-theme="dark">🌙 深色</button>
+                <button class="toggle-btn" id="theme-light" data-theme="light">☀️ 浅色</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>字体大小</label>
+              <div class="slider-group">
+                <input type="range" min="12" max="18" value="14" class="form-slider" id="font-size-slider">
+                <span id="font-size-value">14px</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>主色调</label>
+              <div class="color-picker-group">
+                <div class="color-swatch active" data-color="#6c5ce7" style="background:#6c5ce7;"></div>
+                <div class="color-swatch" data-color="#0984e3" style="background:#0984e3;"></div>
+                <div class="color-swatch" data-color="#00b894" style="background:#00b894;"></div>
+                <div class="color-swatch" data-color="#d63031" style="background:#d63031;"></div>
+                <div class="color-swatch" data-color="#fdcb6e" style="background:#fdcb6e;"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 通知偏好 -->
+          <section id="section-notifications" class="settings-section">
+            <h3>通知偏好</h3>
+            <div class="form-group">
+              <label class="switch-label">
+                <span>邮件通知</span>
+                <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="switch-slider"></span>
+                </label>
+              </label>
+            </div>
+            <div class="form-group">
+              <label class="switch-label">
+                <span>浏览器推送</span>
+                <label class="switch">
+                  <input type="checkbox">
+                  <span class="switch-slider"></span>
+                </label>
+              </label>
+            </div>
+            <div class="form-group">
+              <label class="switch-label">
+                <span>系统公告</span>
+                <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="switch-slider"></span>
+                </label>
+              </label>
+            </div>
+          </section>
+
+          <!-- 安全设置 -->
+          <section id="section-security" class="settings-section">
+            <h3>安全设置</h3>
+            <div class="form-group">
+              <label>修改密码</label>
+              <input type="password" placeholder="当前密码" class="form-input">
+              <input type="password" placeholder="新密码" class="form-input" style="margin-top:8px;">
+              <input type="password" placeholder="确认新密码" class="form-input" style="margin-top:8px;">
+            </div>
+            <button class="btn-primary">更新密码</button>
+            <div class="form-group" style="margin-top:24px;">
+              <label>两步验证</label>
+              <label class="switch-label">
+                <span>启用 2FA</span>
+                <label class="switch">
+                  <input type="checkbox">
+                  <span class="switch-slider"></span>
+                </label>
+              </label>
+            </div>
+          </section>
+
+          <!-- 关于 -->
+          <section id="section-about" class="settings-section">
+            <h3>关于系统</h3>
+            <div class="about-info">
+              <div class="about-row"><span>框架版本</span><span>Mini Micro-Frontend v1.0</span></div>
+              <div class="about-row"><span>子应用</span><span>Vue Settings v1.0</span></div>
+              <div class="about-row"><span>运行环境</span><span id="about-env">Browser</span></div>
+              <div class="about-row"><span>当前用户</span><span id="about-user">加载中...</span></div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <script src="/sub-apps/vue/app.js"></script>
+</body>
+</html>

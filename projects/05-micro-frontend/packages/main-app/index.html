@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>微前端管理平台</title>
+  <link rel="stylesheet" href="/main-app/style.css">
+</head>
+<body>
+  <div id="main-app">
+    <!-- 顶部导航 -->
+    <header class="main-header">
+      <div class="header-brand">
+        <span class="brand-icon">🏗️</span>
+        <h1>Micro Frontend Platform</h1>
+      </div>
+      <nav class="header-nav" id="main-nav">
+        <a href="/" class="nav-link active" data-path="/">首页</a>
+        <a href="/dashboard" class="nav-link" data-path="/dashboard">仪表盘</a>
+        <a href="/settings" class="nav-link" data-path="/settings">设置中心</a>
+      </nav>
+      <div class="header-actions">
+        <span id="global-user" class="user-badge">👤 访客</span>
+        <button id="theme-toggle" class="btn-icon" title="切换主题">🌙</button>
+        <button id="show-report" class="btn-icon" title="性能报告">📊</button>
+      </div>
+    </header>
+
+    <!-- 首页内容 (非子应用) -->
+    <div id="home-content" class="home-content">
+      <div class="hero">
+        <h2>🏗️ Mini 微前端框架</h2>
+        <p>零外部依赖 · 手写实现 · 深入原理</p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <span class="feature-icon">🧪</span>
+          <h3>JS 沙箱</h3>
+          <p>Proxy 隔离 · 多实例并行 · 副作用清理</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🎨</span>
+          <h3>CSS 隔离</h3>
+          <p>命名空间前缀 · 动态管理 · 样式复用</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🔀</span>
+          <h3>路由劫持</h3>
+          <p>History API · 前缀匹配 · 编程式导航</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">📡</span>
+          <h3>应用通信</h3>
+          <p>EventBus · GlobalState · Props 传递</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">♻️</span>
+          <h3>生命周期</h3>
+          <p>状态机 · 钩子系统 · 错误处理</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">⚡</span>
+          <h3>预加载</h3>
+          <p>空闲加载 · 资源缓存 · 优先级队列</p>
+        </div>
+      </div>
+
+      <div class="getting-started">
+        <h3>👆 点击顶部导航体验子应用切换</h3>
+        <p>
+          <strong>仪表盘</strong> — 模拟 React 风格子应用<br>
+          <strong>设置中心</strong> — 模拟 Vue 风格子应用
+        </p>
+      </div>
+    </div>
+
+    <!-- 子应用容器 -->
+    <div id="sub-app-container" class="sub-app-container"></div>
+
+    <!-- 性能报告面板 -->
+    <div id="report-panel" class="report-panel hidden">
+      <div class="report-header">
+        <h3>📊 性能监控报告</h3>
+        <button id="close-report" class="btn-close">✕</button>
+      </div>
+      <pre id="report-content" class="report-content"></pre>
+    </div>
+  </div>
+
+  <!-- 加载框架模块 -->
+  <script src="/framework/src/sandbox.js"></script>
+  <script src="/framework/src/communication.js"></script>
+  <script src="/framework/src/lifecycle.js"></script>
+  <script src="/framework/src/style.js"></script>
+  <script src="/framework/src/loader.js"></script>
+  <script src="/framework/src/router.js"></script>
+  <script src="/framework/src/prefetch.js"></script>
+  <script src="/framework/src/monitor.js"></script>
+  <script src="/framework/src/index.js"></script>
+
+  <!-- 主应用逻辑 -->
+  <script src="/main-app/app.js"></script>
+</body>
+</html>

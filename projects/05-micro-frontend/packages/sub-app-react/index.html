@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/sub-apps/react/style.css">
+</head>
+<body>
+  <div id="react-root">
+    <div class="dashboard-app">
+      <div class="dashboard-header">
+        <h2>📊 React 仪表盘</h2>
+        <span class="sub-app-badge">React Sub-App</span>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card stat-primary">
+          <div class="stat-value" id="stat-users">1,234</div>
+          <div class="stat-label">活跃用户</div>
+          <div class="stat-trend up">↑ 12.5%</div>
+        </div>
+        <div class="stat-card stat-accent">
+          <div class="stat-value" id="stat-orders">856</div>
+          <div class="stat-label">今日订单</div>
+          <div class="stat-trend up">↑ 8.3%</div>
+        </div>
+        <div class="stat-card stat-success">
+          <div class="stat-value" id="stat-revenue">¥52.8K</div>
+          <div class="stat-label">营收</div>
+          <div class="stat-trend up">↑ 23.1%</div>
+        </div>
+        <div class="stat-card stat-warning">
+          <div class="stat-value" id="stat-conversion">3.2%</div>
+          <div class="stat-label">转化率</div>
+          <div class="stat-trend down">↓ 1.2%</div>
+        </div>
+      </div>
+
+      <div class="dashboard-body">
+        <div class="chart-panel">
+          <h3>📈 流量趋势</h3>
+          <div class="chart-area" id="chart-area">
+            <div class="bar-chart">
+              <div class="bar" style="--h:60%" data-label="周一"><span>60%</span></div>
+              <div class="bar" style="--h:80%" data-label="周二"><span>80%</span></div>
+              <div class="bar" style="--h:45%" data-label="周三"><span>45%</span></div>
+              <div class="bar" style="--h:90%" data-label="周四"><span>90%</span></div>
+              <div class="bar" style="--h:70%" data-label="周五"><span>70%</span></div>
+              <div class="bar" style="--h:55%" data-label="周六"><span>55%</span></div>
+              <div class="bar" style="--h:35%" data-label="周日"><span>35%</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="activity-panel">
+          <h3>🕐 最近活动</h3>
+          <ul class="activity-list" id="activity-list">
+            <li class="activity-item">
+              <span class="activity-dot green"></span>
+              <span>用户 Alice 登录系统</span>
+              <span class="activity-time">2 分钟前</span>
+            </li>
+            <li class="activity-item">
+              <span class="activity-dot blue"></span>
+              <span>新订单 #1024 已创建</span>
+              <span class="activity-time">5 分钟前</span>
+            </li>
+            <li class="activity-item">
+              <span class="activity-dot orange"></span>
+              <span>服务器 CPU 达到 85%</span>
+              <span class="activity-time">12 分钟前</span>
+            </li>
+            <li class="activity-item">
+              <span class="activity-dot green"></span>
+              <span>部署 v2.3.1 成功</span>
+              <span class="activity-time">30 分钟前</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="dashboard-footer">
+        <span id="dashboard-status">运行中</span>
+        <span id="dashboard-user">当前用户: 加载中...</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="/sub-apps/react/app.js"></script>
+</body>
+</html>

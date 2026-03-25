@@ -1,0 +1,9 @@
+{
+  "name": "05-micro-frontend",
+  "version": "1.0.0",
+  "description": "微前端容器框架 — 零依赖实现",
+  "scripts": {
+    "dev": "node server.js",
+    "demo": "node examples/demo.js"
+  }
+}
