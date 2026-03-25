@@ -40,19 +40,29 @@ class Server {
       req.body = await this._parseBody(req);
     }
 
-    // 增强 res
+    // 增强 res (添加 Connection: close 防止 keep-alive 挂起)
     res.json = (data, statusCode = 200) => {
-      res.writeHead(statusCode, { "Content-Type": "application/json; charset=utf-8" });
-      res.end(JSON.stringify(data));
+      const body = JSON.stringify(data);
+      res.writeHead(statusCode, {
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": Buffer.byteLength(body),
+        "Connection": "close",
+      });
+      res.end(body);
     };
 
     res.html = (content, statusCode = 200) => {
-      res.writeHead(statusCode, { "Content-Type": "text/html; charset=utf-8" });
-      res.end(content);
+      const body = typeof content === "string" ? content : String(content);
+      res.writeHead(statusCode, {
+        "Content-Type": "text/html; charset=utf-8",
+        "Content-Length": Buffer.byteLength(body),
+        "Connection": "close",
+      });
+      res.end(body);
     };
 
     res.redirect = (location) => {
-      res.writeHead(302, { Location: location });
+      res.writeHead(302, { Location: location, "Connection": "close" });
       res.end();
     };
 
