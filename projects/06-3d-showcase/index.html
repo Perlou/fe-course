@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D 产品展示 — Studio Pro X</title>
+  <meta name="description" content="Three.js 交互式 3D 产品展示应用">
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <!-- 3D Canvas 容器 -->
+  <div id="canvas-container"></div>
+
+  <!-- 热点标注层 -->
+  <div id="hotspot-layer"></div>
+
+  <!-- 加载提示 -->
+  <div class="loading-screen" id="loading-screen">
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <p>加载 3D 场景...</p>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+  <script>
+    // 隐藏加载画面
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const screen = document.getElementById('loading-screen');
+        screen.style.opacity = '0';
+        setTimeout(() => screen.style.display = 'none', 600);
+      }, 800);
+    });
+  </script>
+</body>
+</html>
