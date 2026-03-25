@@ -12,6 +12,7 @@ const fs = require("fs");
 const path = require("path");
 const ModuleGraph = require("./module-graph");
 const Bundler = require("./bundler");
+const SourceMapGenerator = require("./source-map");
 
 class Compiler {
   /**
@@ -99,6 +100,18 @@ class Compiler {
     const bundler = new Bundler();
     let bundleCode = bundler.generate(modules, 0);
 
+    // 5.5 生成 Source Map
+    const devtool = this.config.devtool;
+    if (devtool) {
+      const smGen = new SourceMapGenerator();
+      const { sourceMap, bundleWithComment } = smGen.generate(
+        modules, bundleCode, this.output.filename
+      );
+      bundleCode = bundleWithComment;
+      // 将 .map 文件加入输出资产
+      this._sourceMap = sourceMap;
+    }
+
     // 6. emit - 写入文件前
     const outputPath = path.resolve(this.output.path);
     const outputFile = path.join(outputPath, this.output.filename);
@@ -106,6 +119,11 @@ class Compiler {
     const assets = {
       [this.output.filename]: bundleCode,
     };
+
+    // 添加 Source Map 到输出
+    if (this._sourceMap) {
+      assets[this.output.filename + '.map'] = JSON.stringify(this._sourceMap, null, 2);
+    }
 
     this._callHook("emit", {
       assets,
@@ -120,6 +138,13 @@ class Compiler {
     // 写入文件
     bundleCode = assets[this.output.filename]; // 插件可能修改了内容
     fs.writeFileSync(outputFile, bundleCode, "utf-8");
+
+    // 写入 Source Map 文件
+    if (assets[this.output.filename + '.map']) {
+      const mapFile = path.join(outputPath, this.output.filename + '.map');
+      fs.writeFileSync(mapFile, assets[this.output.filename + '.map'], 'utf-8');
+      console.log(`   Source Map: ${mapFile}`);
+    }
 
     const duration = Date.now() - startTime;
     const size = Buffer.byteLength(bundleCode, "utf-8");

@@ -1,7 +1,7 @@
 # 🚀 前端工程师体系化课程
 
-> **定位**：从零基础到前端架构师的完整学习路径  
-> **技术栈**：HTML5 / CSS3 / JavaScript / TypeScript / React / Vue / Node.js / WebGL  
+> **定位**：从零基础到前端架构师的完整学习路径
+> **技术栈**：HTML5 / CSS3 / JavaScript / TypeScript / React / Vue / Node.js / WebGL
 > **预计时长**：35-45 周（每周投入 10-15 小时）
 
 ---
@@ -10,7 +10,7 @@
 
 - **循序渐进**：从 HTML 基础到前端架构，科学的学习路径
 - **深入原理**：每个核心技术都有源码级别的原理讲解
-- **实战驱动**：9+ 个企业级实战项目，学以致用
+- **实战驱动**：6 大实战项目，学以致用
 - **前沿技术**：涵盖 WebGL、Three.js、WebGPU、WASM 等图形可视化技术
 
 ---
@@ -62,38 +62,34 @@
 ```
 fe-course/
 ├── README.md           # 课程介绍（本文件）
-├── ROADMAP.md         # 学习路线图
-├── LEARNING_PLAN.md   # 详细学习计划
-├── CONCEPTS.md        # 核心概念汇总
-├── src/               # 各阶段学习内容
-│   ├── phase01-html/
-│   │   ├── README.md      # 阶段概述
-│   │   ├── CONCEPT.md     # 深度概念讲解
-│   │   ├── examples/      # 示例代码
-│   │   └── exercises/     # 练习题
+├── ROADMAP.md          # 学习路线图
+├── LEARNING_PLAN.md    # 详细学习计划
+├── CONCEPTS.md         # 核心概念汇总
+├── src/                # 各阶段学习内容
+│   ├── phase01-html/       # CONCEPT.md + examples/ + exercises/
 │   ├── phase02-css/
-│   └── ...
-└── projects/          # 实战项目
-    ├── mini-react/
-    ├── mini-vue/
-    └── ...
+│   └── ... (共 24 个阶段)
+└── projects/           # 实战项目
+    ├── 01-todo-app/        # 待办事项应用
+    ├── 02-mini-webpack/    # Mini Webpack
+    ├── 03-mini-react/      # Mini React
+    ├── 04-blog-system/     # 全栈博客系统
+    ├── 05-micro-frontend/  # 微前端容器
+    └── 06-3d-showcase/     # 3D 产品展示
 ```
 
 ---
 
-## 🏆 核心实战项目
+## 🏆 实战项目
 
-| 项目              | 阶段     | 技术要点                        |
-| :---------------- | :------- | :------------------------------ |
-| 手写 Promise      | Phase 3  | 异步编程、Promise A+ 规范       |
-| 待办事项应用      | Phase 4  | DOM 操作、事件机制              |
-| 手写 Mini React   | Phase 11 | Fiber、虚拟 DOM、Reconciliation |
-| 手写 Mini Vue     | Phase 13 | 响应式、编译器、Diff 算法       |
-| 手写 Mini Webpack | Phase 10 | AST、依赖分析、代码生成         |
-| 后台管理系统      | Phase 18 | 全栈开发、权限系统              |
-| 微前端系统        | Phase 20 | qiankun、沙箱、通信             |
-| 数据可视化大屏    | Phase 22 | Canvas、ECharts、D3.js          |
-| 3D 产品展示       | Phase 23 | Three.js、着色器、交互          |
+| 项目 | 阶段 | 核心技术 | 状态 |
+| :--- | :--- | :------- | :--- |
+| [待办事项应用](projects/01-todo-app/) | Phase 1-5 | HTML/CSS/JS/DOM/事件委托/localStorage | ✅ 完成 |
+| [Mini Webpack](projects/02-mini-webpack/) | Phase 6-10 | 依赖分析/ESM→CJS/Loader/Plugin/Source Map | ✅ 完成 |
+| [Mini React](projects/03-mini-react/) | Phase 11-15 | JSX/Fiber/Reconciliation/Hooks/合成事件 | ✅ 完成 |
+| [全栈博客系统](projects/04-blog-system/) | Phase 16-18 | HTTP 服务器/JWT/Markdown/SSR/React SPA | ✅ 完成 |
+| [微前端容器](projects/05-micro-frontend/) | Phase 19-21 | Proxy 沙箱/路由劫持/CSS 隔离/生命周期 | ✅ 完成 |
+| [3D 产品展示](projects/06-3d-showcase/) | Phase 22-24 | Three.js/PBR 材质/爆炸图/Raycaster | ✅ 完成 |
 
 ---
 

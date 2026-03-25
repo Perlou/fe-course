@@ -52,6 +52,7 @@ class ModuleGraph {
 
     // 读取源文件
     let source = fs.readFileSync(resolvedPath, "utf-8");
+    const originalSource = source; // 保留原始源码 (Source Map 需要)
 
     // 应用 Loader 转换 (Loader 先于 Parser 执行)
     const isLoaderTransformed = this._hasMatchingLoader(resolvedPath);
@@ -66,6 +67,7 @@ class ModuleGraph {
     const mod = {
       id: moduleId++,
       filePath: resolvedPath,
+      originalSource,  // 原始源码 (供 Source Map 使用)
       code,
       dependencies: [],
       depMapping: {},

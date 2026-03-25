@@ -17,6 +17,9 @@ module.exports = {
     filename: "bundle.js",
   },
 
+  // Source Map (设为 'source-map' 启用)
+  devtool: 'source-map',
+
   // Loader 配置: 类似 webpack 的 module.rules
   module: {
     rules: [
