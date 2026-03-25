@@ -1,0 +1,12 @@
+{
+  "name": "mini-react",
+  "version": "1.0.0",
+  "description": "从零实现一个简易版 React，理解框架核心原理",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node tests/test.js",
+    "demo": "node examples/demo.js"
+  },
+  "keywords": ["react", "fiber", "hooks", "vdom"],
+  "license": "MIT"
+}

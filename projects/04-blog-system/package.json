@@ -1,0 +1,12 @@
+{
+  "name": "fullstack-blog",
+  "version": "1.0.0",
+  "description": "从零实现全栈博客系统，理解全栈开发核心原理",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "demo": "node examples/demo.js"
+  },
+  "keywords": ["fullstack", "blog", "node", "ssr"],
+  "license": "MIT"
+}

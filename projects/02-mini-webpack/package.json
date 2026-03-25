@@ -1,0 +1,12 @@
+{
+  "name": "mini-webpack",
+  "version": "1.0.0",
+  "description": "从零实现一个简易版 Webpack，理解模块打包核心原理",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "node src/index.js",
+    "test": "node tests/test.js"
+  },
+  "keywords": ["webpack", "bundler", "module"],
+  "license": "MIT"
+}
