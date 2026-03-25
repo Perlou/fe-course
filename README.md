@@ -95,9 +95,10 @@ fe-course/
 
 ## 🚦 快速开始
 
-1. 查看 [ROADMAP.md](./ROADMAP.md) 了解完整学习路线
-2. 阅读 [LEARNING_PLAN.md](./LEARNING_PLAN.md) 查看详细学习计划
-3. 从 `src/phase01-html` 开始你的学习之旅
+1. 阅读 **[GETTING_STARTED.md](./GETTING_STARTED.md)** — 📖 新手入门指南（如何运行每一段代码）
+2. 查看 [ROADMAP.md](./ROADMAP.md) 了解完整学习路线
+3. 阅读 [LEARNING_PLAN.md](./LEARNING_PLAN.md) 查看详细学习计划
+4. 从 `src/phase01-html` 开始你的学习之旅
 
 ---
 
